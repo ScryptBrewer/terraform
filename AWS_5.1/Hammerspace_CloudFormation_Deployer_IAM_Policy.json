@@ -1,0 +1,130 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": [
+                "cloudformation:CreateStack",
+                "cloudformation:DeleteStack",
+                "cloudformation:DescribeStacks",
+                "cloudformation:DescribeStackEvents",
+                "cloudformation:DescribeStackResources",
+                "cloudformation:GetTemplateSummary",
+                "cloudformation:ValidateTemplate",
+                "cloudformation:UpdateStack",
+                "cloudformation:TagResource"
+            ],
+            "Resource": "*"
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "ec2:CreateSecurityGroup",
+                "ec2:DeleteSecurityGroup",
+                "ec2:AuthorizeSecurityGroupIngress",
+                "ec2:RevokeSecurityGroupIngress",
+                "ec2:DescribeSecurityGroups",
+                "ec2:RunInstances",
+                "ec2:TerminateInstances",
+                "ec2:DescribeInstances",
+                "ec2:DescribeInstanceAttribute",
+                "ec2:CreateVolume",
+                "ec2:DeleteVolume",
+                "ec2:DescribeVolumes",
+                "ec2:AttachVolume",
+                "ec2:DetachVolume",
+                "ec2:DescribeSubnets",
+                "ec2:DescribeVpcs",
+                "ec2:DescribeKeyPairs",
+                "ec2:DescribeAvailabilityZones",
+                "ec2:DescribeImages",
+                "ec2:AssignPrivateIpAddresses",
+                "ec2:UnassignPrivateIpAddresses",
+                "ec2:CreateTags",
+                "ec2:DeleteTags"
+            ],
+            "Resource": "*"
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "iam:CreateRole",
+                "iam:DeleteRole",
+                "iam:GetRole",
+                "iam:PutRolePolicy",
+                "iam:DeleteRolePolicy",
+                "iam:ListRolePolicies",
+                "iam:CreateInstanceProfile",
+                "iam:DeleteInstanceProfile",
+                "iam:GetInstanceProfile",
+                "iam:AddRoleToInstanceProfile",
+                "iam:RemoveRoleFromInstanceProfile",
+                "iam:CreateGroup",
+                "iam:DeleteGroup",
+                "iam:GetGroup",
+                "iam:ListSSHPublicKeys",
+                "iam:GetSSHPublicKey"
+            ],
+            "Resource": "*"
+        },
+        {
+            "Effect": "Allow",
+            "Action": "iam:PassRole",
+            "Resource": [
+                "arn:aws:iam::*:role/*"
+            ],
+            "Condition": {
+                "StringEquals": {
+                    "iam:PassedToService": "ec2.amazonaws.com"
+                }
+            }
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "s3:GetObject"
+            ],
+            "Resource": [
+                "arn:aws:s3:::awsmp-fulfillment-cf-templates-prod/a858de46-94c0-4c58-8413-348435c234a2/d2f3c37fb3164c9fbe61be602d7ac3b6.template"
+            ]
+        },
+        // The following permssions can be limited down to a specifc bucket Under resources to reduce permission scope
+        {
+            "Effect": "Allow",
+            "Action": [
+                "s3:CreateBucket",
+                "s3:DeleteBucket",
+                "s3:ListBucket",      // To list contents of a specific bucket
+                "s3:ListAllMyBuckets",// To list all buckets in the account
+                "s3:GetBucketLocation",
+                "s3:PutBucketPolicy",
+                "s3:GetBucketPolicy",
+                "s3:DeleteBucketPolicy",
+                "s3:PutBucketTagging",
+                "s3:GetBucketTagging",
+                "s3:PutEncryptionConfiguration",
+                "s3:GetEncryptionConfiguration",
+                "s3:PutLifecycleConfiguration",
+                "s3:GetLifecycleConfiguration"
+                // For managing objects within buckets, if the deployer also handles this:
+                "s3:PutObject",
+                "s3:GetObject", 
+                "s3:DeleteObject"
+            ],
+            "Resource": "arn:aws:s3:::*" // For bucket-level actions like CreateBucket, DeleteBucket, ListAllMyBuckets.
+                                         // For other actions, this is broad. Ideally, scope to specific bucket ARNs if known.
+        }
+        // If object-level permissions are needed for specific buckets by the deployer:
+        // ,
+        // {
+        //     "Effect": "Allow",
+        //     "Action": [
+        //         "s3:PutObject",
+        //         "s3:GetObject",
+        //         "s3:DeleteObject",
+        //         "s3:DeleteObjectVersion"
+        //     ],
+        //     "Resource": "arn:aws:s3:::*/*" // Broad for objects in any bucket. Scope to "arn:aws:s3:::your-bucket-name/*" if possible.
+        // }
+    ]
+}
