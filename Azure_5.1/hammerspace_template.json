@@ -1,0 +1,2984 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "location": {
+            "type": "string",
+            "allowedValues": [
+                "australiacentral",
+                "australiaeast",
+                "australiasoutheast",
+                "brazilsouth",
+                "canadacentral",
+                "canadaeast",
+                "centralindia",
+                "centralus",
+                "eastasia",
+                "eastus",
+                "eastus2",
+                "francecentral",
+                "germanywestcentral",
+                "japaneast",
+                "japanwest",
+                "koreacentral",
+                "koreasouth",
+                "northcentralus",
+                "northeurope",
+                "norwayeast",
+                "southafricanorth",
+                "southcentralus",
+                "southindia",
+                "southeastasia",
+                "switzerlandnorth",
+                "uaenorth",
+                "uksouth",
+                "ukwest",
+                "westcentralus",
+                "westeurope",
+                "westindia",
+                "westus",
+                "westus2",
+                "westus3"
+            ],
+            "metadata": {
+                "description": "Location for all created resources"
+            }
+        },
+        "name": {
+            "type": "string",
+            "defaultValue": "Hammerspace1",
+            "minLength": 3,
+            "maxLength": 24,
+            "metadata": {
+                "description": "Name prefix for created resources (Valid characters: Alphanumerics, hyphens)"
+            }
+        },
+        "solutionDeploymentType": {
+            "type": "string",
+            "allowedValues": [
+                "Create a new solution",
+                "Add Data Services (DSX) to an existing deployment"
+            ],
+            "defaultValue": "Create a new solution",
+            "metadata": {
+                "description": "Choose to deploy a new stack with both Anvil and DSX nodes, or add DSX nodes to combine with a pre-existing Anvil."
+            }
+        },
+        "adminPassword": {
+            "type": "securestring"
+        },
+        "anvilConfiguration": {
+            "type": "string",
+            "allowedValues": [
+                "High Availability",
+                "Standalone"
+            ],
+            "defaultValue": "High Availability",
+            "metadata": {
+                "description": "High availability (2 nodes) or Standalone (1 node) Anvil metadata server"
+            }
+        },
+        "anvilInstanceType": {
+            "type": "string",
+            "allowedValues": [
+                "Standard_A4m_v2",
+                "Standard_A6",
+                "Standard_A7",
+                "Standard_A8",
+                "Standard_A8m_v2",
+                "Standard_A9",
+                "Standard_A10",
+                "Standard_A11",
+                "Standard_D4",
+                "Standard_D4_v2",
+                "Standard_D5_v2",
+                "Standard_D8_v3",
+                "Standard_D8a_v4",
+                "Standard_D8as_v4",
+                "Standard_D8ds_v5",
+                "Standard_D8s_v3",
+                "Standard_D8s_v5",
+                "Standard_D12",
+                "Standard_D12_v2",
+                "Standard_D13",
+                "Standard_D13_v2",
+                "Standard_D14",
+                "Standard_D14_v2",
+                "Standard_D15_v2",
+                "Standard_D16_v3",
+                "Standard_D16a_v4",
+                "Standard_D16as_v4",
+                "Standard_D16ds_v5",
+                "Standard_D16s_v3",
+                "Standard_D16s_v5",
+                "Standard_D32_v3",
+                "Standard_D32a_v4",
+                "Standard_D32as_v4",
+                "Standard_D32ds_v5",
+                "Standard_D32s_v3",
+                "Standard_D32s_v5",
+                "Standard_D48_v3",
+                "Standard_D48a_v4",
+                "Standard_D48as_v4",
+                "Standard_D48ds_v5",
+                "Standard_D48s_v3",
+                "Standard_D48s_v5",
+                "Standard_D64_v3",
+                "Standard_D64a_v4",
+                "Standard_D64as_v4",
+                "Standard_D64ds_v5",
+                "Standard_D64s_v3",
+                "Standard_D64s_v5",
+                "Standard_D96a_v4",
+                "Standard_D96as_v4",
+                "Standard_D96ds_v5",
+                "Standard_D96s_v5",
+                "Standard_DS4",
+                "Standard_DS4_v2",
+                "Standard_DS5_v2",
+                "Standard_DS12",
+                "Standard_DS12_v2",
+                "Standard_DS13",
+                "Standard_DS13_v2",
+                "Standard_DS14",
+                "Standard_DS14_v2",
+                "Standard_DS15_v2",
+                "Standard_E4_v3",
+                "Standard_E4a_v4",
+                "Standard_E4as_v4",
+                "Standard_E4s_v3",
+                "Standard_E8_v3",
+                "Standard_E8a_v4",
+                "Standard_E8as_v4",
+                "Standard_E8s_v3",
+                "Standard_E8s_v5",
+                "Standard_E16_v3",
+                "Standard_E16a_v4",
+                "Standard_E16as_v4",
+                "Standard_E16s_v3",
+                "Standard_E16s_v5",
+                "Standard_E20_v3",
+                "Standard_E20a_v4",
+                "Standard_E20as_v4",
+                "Standard_E20s_v3",
+                "Standard_E20s_v5",
+                "Standard_E32_v3",
+                "Standard_E32a_v4",
+                "Standard_E32as_v4",
+                "Standard_E32s_v3",
+                "Standard_E32s_v5",
+                "Standard_E48_v3",
+                "Standard_E48a_v4",
+                "Standard_E48as_v4",
+                "Standard_E48s_v3",
+                "Standard_E48s_v5",
+                "Standard_E64_v3",
+                "Standard_E64a_v4",
+                "Standard_E64as_v4",
+                "Standard_E64i_v3",
+                "Standard_E64is_v3",
+                "Standard_E64s_v3",
+                "Standard_E64s_v5",
+                "Standard_E96a_v4",
+                "Standard_E96as_v4",
+                "Standard_E96s_v5",
+                "Standard_F16",
+                "Standard_F16s",
+                "Standard_F16s_v2",
+                "Standard_F32s_v2",
+                "Standard_F48s_v2",
+                "Standard_F64s_v2",
+                "Standard_F72s_v2",
+                "Standard_G2",
+                "Standard_G3",
+                "Standard_G4",
+                "Standard_G5",
+                "Standard_GS2",
+                "Standard_GS3",
+                "Standard_GS4",
+                "Standard_GS5",
+                "Standard_H8",
+                "Standard_H8m",
+                "Standard_H16",
+                "Standard_H16m",
+                "Standard_H16mr",
+                "Standard_H16r",
+                "Standard_HB60rs",
+                "Standard_HB120-16rs_v3",
+                "Standard_HB120-32rs_v3",
+                "Standard_HB120-64rs_v3",
+                "Standard_HB120-96rs_v3",
+                "Standard_HB120rs_v2",
+                "Standard_HB120rs_v3",
+                "Standard_HC44rs",
+                "Standard_M8ms",
+                "Standard_M16ms",
+                "Standard_M32ls",
+                "Standard_M32ms",
+                "Standard_M32ts",
+                "Standard_M64",
+                "Standard_M64ls",
+                "Standard_M64m",
+                "Standard_M64ms",
+                "Standard_M64s",
+                "Standard_M128",
+                "Standard_M128m",
+                "Standard_M128ms",
+                "Standard_M128s",
+                "Standard_M208ms_v2",
+                "Standard_M208s_v2",
+                "Standard_M416ms_v2",
+                "Standard_M416s_v2"
+            ],
+            "defaultValue": "Standard_E4as_v4",
+            "metadata": {
+                "description": "Anvil Metadata Server Instance Type"
+            }
+        },
+        "anvilBootDiskStorageType": {
+            "defaultValue": "Default",
+            "type": "string",
+            "allowedValues": [
+                "Default",
+                "Standard_LRS",
+                "Premium_LRS",
+                "StandardSSD_LRS"
+            ],
+            "metadata": {
+                "description": "Anvil Boot/OS Disk Storage Type (Default is Premium_LRS if supported by the instance type, otherwise StandardSSD_LRS)"
+            }
+        },
+        "anvilBootDiskSize": {
+            "type": "int",
+            "defaultValue": 128,
+            "minValue": 100,
+            "maxValue": 2048,
+            "metadata": {
+                "description": "Anvil Boot/OS Disk Size"
+            }
+        },
+        "anvilMetadataDiskStorageType": {
+            "defaultValue": "Default",
+            "type": "string",
+            "allowedValues": [
+                "Default",
+                "Standard_LRS",
+                "StandardSSD_LRS",
+                "Premium_LRS",
+                "UltraSSD_LRS"
+            ],
+            "metadata": {
+                "description": "Anvil Metadata Disk Storage Type (Default is Premium_LRS if supported by the instance type, otherwise StandardSSD_LRS)"
+            }
+        },
+        "anvilMetadataDiskSize": {
+            "type": "int",
+            "defaultValue": 256,
+            "minValue": 100,
+            "maxValue": 65536,
+            "metadata": {
+                "description": "Anvil Metadata Disk Size (only Ultra disks support over 32767)"
+            }
+        },
+        "DSXInstanceCount": {
+            "type": "int",
+            "defaultValue": 1,
+            "minValue": 0,
+            "maxValue": 10,
+            "metadata": {
+                "description": "How many DSX instances to create as part of this deployment? (minimum 0, maximum 10)"
+            }
+        },
+        "DSXInstanceType": {
+            "type": "string",
+            "allowedValues": [
+                "Basic_A3",
+                "Basic_A4",
+                "Standard_A2_v2",
+                "Standard_A2m_v2",
+                "Standard_A3",
+                "Standard_A4",
+                "Standard_A4_v2",
+                "Standard_A4m_v2",
+                "Standard_A5",
+                "Standard_A6",
+                "Standard_A7",
+                "Standard_A8",
+                "Standard_A8_v2",
+                "Standard_A8m_v2",
+                "Standard_A9",
+                "Standard_A10",
+                "Standard_A11",
+                "Standard_D2",
+                "Standard_D2_v2",
+                "Standard_D2_v3",
+                "Standard_D2a_v4",
+                "Standard_D2as_v4",
+                "Standard_D2ds_v5",
+                "Standard_D2s_v3",
+                "Standard_D2s_v5",
+                "Standard_D3",
+                "Standard_D3_v2",
+                "Standard_D4",
+                "Standard_D4_v2",
+                "Standard_D4_v3",
+                "Standard_D4a_v4",
+                "Standard_D4as_v4",
+                "Standard_D4ds_v5",
+                "Standard_D4s_v3",
+                "Standard_D4s_v5",
+                "Standard_D5_v2",
+                "Standard_D8_v3",
+                "Standard_D8a_v4",
+                "Standard_D8as_v4",
+                "Standard_D8ds_v5",
+                "Standard_D8s_v3",
+                "Standard_D8s_v5",
+                "Standard_D11",
+                "Standard_D11_v2",
+                "Standard_D12",
+                "Standard_D12_v2",
+                "Standard_D13",
+                "Standard_D13_v2",
+                "Standard_D14",
+                "Standard_D14_v2",
+                "Standard_D15_v2",
+                "Standard_D16_v3",
+                "Standard_D16a_v4",
+                "Standard_D16as_v4",
+                "Standard_D16ds_v5",
+                "Standard_D16s_v3",
+                "Standard_D16s_v5",
+                "Standard_D32_v3",
+                "Standard_D32a_v4",
+                "Standard_D32as_v4",
+                "Standard_D32ds_v5",
+                "Standard_D32s_v3",
+                "Standard_D32s_v5",
+                "Standard_D48_v3",
+                "Standard_D48a_v4",
+                "Standard_D48as_v4",
+                "Standard_D48ds_v5",
+                "Standard_D48s_v3",
+                "Standard_D48s_v5",
+                "Standard_D64_v3",
+                "Standard_D64a_v4",
+                "Standard_D64as_v4",
+                "Standard_D64ds_v5",
+                "Standard_D64s_v3",
+                "Standard_D64s_v5",
+                "Standard_D96a_v4",
+                "Standard_D96as_v4",
+                "Standard_D96ds_v5",
+                "Standard_D96s_v5",
+                "Standard_DC2s",
+                "Standard_DC4s",
+                "Standard_DS2",
+                "Standard_DS2_v2",
+                "Standard_DS3",
+                "Standard_DS3_v2",
+                "Standard_DS4",
+                "Standard_DS4_v2",
+                "Standard_DS5_v2",
+                "Standard_DS11",
+                "Standard_DS11_v2",
+                "Standard_DS12",
+                "Standard_DS12_v2",
+                "Standard_DS13",
+                "Standard_DS13_v2",
+                "Standard_DS14",
+                "Standard_DS14_v2",
+                "Standard_DS15_v2",
+                "Standard_E2_v3",
+                "Standard_E2a_v4",
+                "Standard_E2as_v4",
+                "Standard_E2s_v3",
+                "Standard_E2s_v5",
+                "Standard_E4_v3",
+                "Standard_E4a_v4",
+                "Standard_E4as_v4",
+                "Standard_E4s_v3",
+                "Standard_E4s_v5",
+                "Standard_E8_v3",
+                "Standard_E8a_v4",
+                "Standard_E8as_v4",
+                "Standard_E8s_v3",
+                "Standard_E8s_v5",
+                "Standard_E16_v3",
+                "Standard_E16a_v4",
+                "Standard_E16as_v4",
+                "Standard_E16s_v3",
+                "Standard_E16s_v5",
+                "Standard_E20_v3",
+                "Standard_E20a_v4",
+                "Standard_E20as_v4",
+                "Standard_E20s_v3",
+                "Standard_E20s_v5",
+                "Standard_E32_v3",
+                "Standard_E32a_v4",
+                "Standard_E32as_v4",
+                "Standard_E32s_v3",
+                "Standard_E32s_v5",
+                "Standard_E48_v3",
+                "Standard_E48a_v4",
+                "Standard_E48as_v4",
+                "Standard_E48s_v3",
+                "Standard_E48s_v5",
+                "Standard_E64_v3",
+                "Standard_E64a_v4",
+                "Standard_E64as_v4",
+                "Standard_E64i_v3",
+                "Standard_E64is_v3",
+                "Standard_E64s_v3",
+                "Standard_E64s_v5",
+                "Standard_E96a_v4",
+                "Standard_E96as_v4",
+                "Standard_E96s_v5",
+                "Standard_F2",
+                "Standard_F2s",
+                "Standard_F2s_v2",
+                "Standard_F4",
+                "Standard_F4s",
+                "Standard_F4s_v2",
+                "Standard_F8",
+                "Standard_F8s",
+                "Standard_F8s_v2",
+                "Standard_F16",
+                "Standard_F16s",
+                "Standard_F16s_v2",
+                "Standard_F32s_v2",
+                "Standard_F48s_v2",
+                "Standard_F64s_v2",
+                "Standard_F72s_v2",
+                "Standard_G1",
+                "Standard_G2",
+                "Standard_G3",
+                "Standard_G4",
+                "Standard_G5",
+                "Standard_GS1",
+                "Standard_GS2",
+                "Standard_GS3",
+                "Standard_GS4",
+                "Standard_GS5",
+                "Standard_H8",
+                "Standard_H8m",
+                "Standard_H16",
+                "Standard_H16m",
+                "Standard_H16mr",
+                "Standard_H16r",
+                "Standard_HB60rs",
+                "Standard_HB120-16rs_v3",
+                "Standard_HB120-32rs_v3",
+                "Standard_HB120-64rs_v3",
+                "Standard_HB120-96rs_v3",
+                "Standard_HB120rs_v2",
+                "Standard_HB120rs_v3",
+                "Standard_HC44rs",
+                "Standard_M8ms",
+                "Standard_M16ms",
+                "Standard_M32ls",
+                "Standard_M32ms",
+                "Standard_M32ts",
+                "Standard_M64",
+                "Standard_M64ls",
+                "Standard_M64m",
+                "Standard_M64ms",
+                "Standard_M64s",
+                "Standard_M128",
+                "Standard_M128m",
+                "Standard_M128ms",
+                "Standard_M128s",
+                "Standard_M208ms_v2",
+                "Standard_M208s_v2",
+                "Standard_M416ms_v2",
+                "Standard_M416s_v2"
+            ],
+            "defaultValue": "Standard_F2s_v2",
+            "metadata": {
+                "description": "DSX Instance Type"
+            }
+        },
+        "DSXBootDiskStorageType": {
+            "defaultValue": "Default",
+            "type": "string",
+            "allowedValues": [
+                "Default",
+                "Standard_LRS",
+                "Premium_LRS",
+                "StandardSSD_LRS"
+            ],
+            "metadata": {
+                "description": "DSX Boot/OS Disk Storage Type (Default is Premium_LRS if supported by the instance type, otherwise Standard_LRS)"
+            }
+        },
+        "DSXBootDiskSize": {
+            "type": "int",
+            "defaultValue": 128,
+            "minValue": 100,
+            "maxValue": 2048,
+            "metadata": {
+                "description": "DSX Boot/OS Disk Size"
+            }
+        },
+        "DSXDataDiskStorageType": {
+            "defaultValue": "Default",
+            "type": "string",
+            "allowedValues": [
+                "Default",
+                "Standard_LRS",
+                "Premium_LRS",
+                "StandardSSD_LRS",
+                "UltraSSD_LRS"
+            ],
+            "metadata": {
+                "description": "DSX Data Disk Storage Type (Default is Premium_LRS if supported by the instance type, otherwise Standard_LRS)"
+            }
+        },
+        "DSXDataDiskCount": {
+            "type": "int",
+            "defaultValue": 1,
+            "minValue": 0,
+            "maxValue": 64,
+            "metadata": {
+                "description": "DSX Data Disk Count"
+            }
+        },
+        "DSXDataDiskSize": {
+            "type": "int",
+            "defaultValue": 256,
+            "minValue": 100,
+            "maxValue": 65536,
+            "metadata": {
+                "description": "DSX Data Disk Size (size of each disk) (only Ultra disks support over 32767)"
+            }
+        },
+        "DSXDataDiskStriping": {
+            "type": "string",
+            "allowedValues": [
+                "Disable",
+                "Enable"
+            ],
+            "defaultValue": "Disable",
+            "metadata": {
+                "description": "Stripe data across DSX data disks within an instance (RAID0)"
+            }
+        },
+        "virtualNetworkNewOrExisting": {
+            "type": "string",
+            "allowedValues": [
+                "new",
+                "existing"
+            ],
+            "defaultValue": "new",
+            "metadata": {
+                "description": "Specify 'new' or 'existing' VNET"
+            }
+        },
+        "virtualNetworkName": {
+            "type": "string",
+            "defaultValue": "",
+            "metadata": {
+                "description": "Name of the VNET (leave blank to generate a name automatically)"
+            }
+        },
+        "virtualNetworkResourceGroup": {
+            "type": "string",
+            "defaultValue": "",
+            "metadata": {
+                "description": "If using an existing VNET in a different resource group than the deployment, specify its resource group.  If the existing VNET is in a different resource group than this deployment, all subnets must be specified below as existing subnets."
+            }
+        },
+        "virtualNetworkCIDR": {
+            "type": "string",
+            "defaultValue": "10.0.0.0/16",
+            "metadata": {
+                "description": "CIDR of the VNET (if creating a new VNET)"
+            }
+        },
+        "dataSubnetName": {
+            "type": "string",
+            "defaultValue": "",
+            "metadata": {
+                "description": "Name of the Data Subnet in the virtual network (if using an existing subnet)"
+            }
+        },
+        "dataSubnetCIDR": {
+            "type": "string",
+            "defaultValue": "10.0.10.0/24",
+            "metadata": {
+                "description": "CIDR of the Data Subnet in the virtual network (if creating a new Data Subnet)"
+            }
+        },
+        "anvilDataClusterIP": {
+            "type": "string",
+            "defaultValue": "",
+            "metadata": {
+                "description": "High Availability Anvil Cluster IP on the Data Subnet"
+            }
+        },
+        "HASubnetName": {
+            "type": "string",
+            "defaultValue": "",
+            "metadata": {
+                "description": "Name of the High Availability Subnet in the virtual network (if deploying a High Availability cluster and using an existing subnet).  This subnet cannot be shared with any other instances. A /29 subnet is recommended."
+            }
+        },
+        "HASubnetCIDR": {
+            "type": "string",
+            "defaultValue": "10.0.254.248/29",
+            "metadata": {
+                "description": "CIDR of the HA Subnet in the virtual network (if creating a new HA Subnet)"
+            }
+        },
+        "networkSecurityGroupName": {
+            "type": "string",
+            "defaultValue": "",
+            "metadata": {
+                "description": "Name of the Network Security Group (leave blank to create a new NSG)"
+            }
+        },
+        "publicIPAddresses": {
+            "defaultValue": "Disable",
+            "type": "string",
+            "allowedValues": [
+                "Disable",
+                "Enable"
+            ],
+            "metadata": {
+                "description": "Create public IP addresses for new instances"
+            }
+        },
+        "useProximityPlacementGroup": {
+            "type": "bool",
+            "defaultValue": false
+        },
+        "proximityPlacementGroupName": {
+            "type": "string",
+            "defaultValue": "",
+            "metadata": {
+                "description": "Name of the Proximity Placement Group (leave blank to create a new PPG when enabled)"
+            }
+        },
+        "availabilitySetName": {
+            "type": "string",
+            "defaultValue": "",
+            "metadata": {
+                "description": "Name of the Availability Set (leave blank to create new Availability Sets for Anvil and DSX)"
+            }
+        },
+        "availabilityZone": {
+            "type": "string",
+            "defaultValue": "",
+            "allowedValues": ["", "1", "2", "3"],
+            "metadata": {
+                "description": "Specific availability zone for all resources. Leave empty for no zone constraint."
+            }
+        },
+        "tags": {
+            "type": "string",
+            "defaultValue": "",
+            "metadata": {
+                "description": "Tags to be added to all newly created resources, in the format: {\"tagName\": \"tagValue\", \"tag2Name\": \"tag2Value\"}"
+            }
+        }
+    },
+    "variables": {
+        "prefix": "[hsfunc.normalize(parameters('name'))]",
+        "offer": "hammerspace_byol_5_0",
+        "domain": "[concat(variables('prefix'),'.azure')]",
+        "highAvailability": "[equals(parameters('anvilConfiguration'), 'High Availability')]",
+        "createAnvil": "[equals(parameters('solutionDeploymentType'), 'Create a new solution')]",
+        "createHA": "[and(variables('createAnvil'), variables('highAvailability'))]",
+        "createResources": "[or(variables('createAnvil'), greater(parameters('DSXInstanceCount'), 0))]",
+        "usePPG": "[parameters('useProximityPlacementGroup')]",
+        "createPPG": "[and(parameters('useProximityPlacementGroup'), empty(parameters('proximityPlacementGroupName')))]",
+        "createNSG": "[empty(parameters('networkSecurityGroupName'))]",
+        "createVNet": "[and(equals(parameters('virtualNetworkNewOrExisting'), 'new'), variables('createResources'))]",
+        "publicIPAddresses": "[equals(parameters('publicIPAddresses'), 'Enable')]",
+        "defaultNsgName": "[concat(variables('prefix'),'NetSecGroup')]",
+        "nsgName": "[if(variables('createNSG'), variables('defaultNsgName'), parameters('networkSecurityGroupName'))]",
+        "ppgName": "[if(empty(parameters('proximityPlacementGroupName')), concat(variables('prefix'),'PPG'), parameters('proximityPlacementGroupName'))]",
+        "loadBalancerName": "[concat(variables('prefix'),'LoadBalancer')]",
+        "vNetResGroup": "[if(empty(parameters('virtualNetworkResourceGroup')), resourceGroup().name, parameters('virtualNetworkResourceGroup'))]",
+        "defaultVNetName": "[concat(variables('prefix'),'VNet')]",
+        "defaultDataSubnetName": "[concat(variables('prefix'),'DataSubnet')]",
+        "defaultHASubnetName": "[concat(variables('prefix'),'HaSubnet')]",
+        "vNetName": "[if(empty(parameters('virtualNetworkName')), variables('defaultVNetName'), parameters('virtualNetworkName'))]",
+        "dataSubnetName": "[if(empty(parameters('dataSubnetName')), variables('defaultDataSubnetName'), parameters('dataSubnetName'))]",
+        "HASubnetName": "[if(empty(parameters('HASubnetName')), variables('defaultHASubnetName'), parameters('HASubnetName'))]",
+        "vNetDataSubnetName": "[concat(variables('vNetName'), '/', variables('dataSubnetName'))]",
+        "vNetHaSubnetName": "[concat(variables('vNetName'), '/', variables('HASubnetName'))]",
+        "dataNetNum": "[if(equals(parameters('dataSubnetCIDR'), ''), '4', last(split(parameters('dataSubnetCIDR'),'/')))]",
+        "createAvailSets": "[empty(parameters('availabilitySetName'))]",
+        "anvilAvailSetName": "[if(variables('createAvailSets'), concat(variables('prefix'),'AnvilAvailSet'), parameters('availabilitySetName'))]",
+        "dsxAvailSetName": "[if(variables('createAvailSets'), concat(variables('prefix'),'DSXAvailSet'), parameters('availabilitySetName'))]",
+        "anvil1Name": "[concat(variables('prefix'),'Anvil1')]",
+        "anvil2Name": "[concat(variables('prefix'),'Anvil2')]",
+        "dynamicClusterIP": "[equals(parameters('anvilDataClusterIP'), '')]",
+        "anvil1DataIface": "[concat(variables('prefix'),'Anvil1DataIface')]",
+        "anvil2DataIface": "[concat(variables('prefix'),'Anvil2DataIface')]",
+        "anvil1HaIface": "[concat(variables('prefix'),'Anvil1HaIface')]",
+        "anvil2HaIface": "[concat(variables('prefix'),'Anvil2HaIface')]",
+        "anvil1PubIpAddressName": "[concat(variables('prefix'), 'Anvil1PubIP' )]",
+        "anvil2PubIpAddressName": "[concat(variables('prefix'), 'Anvil2PubIP' )]",
+        "unusedValidHASubnet": "10.0.254.248/29",
+        "useSpecificZone": "[not(empty(parameters('availabilityZone')))]",
+        "zoneArray": "[if(variables('useSpecificZone'), createArray(parameters('availabilityZone')), json('null'))]",
+        "HASubnetCIDR": "[if(variables('highAvailability'), parameters('HASubnetCIDR'), variables('unusedValidHASubnet'))]",
+        "builtinTags": {
+            "product": "Hammerspace"
+        },
+        "resourceTags": "[if(equals(parameters('tags'), ''), variables('builtinTags'), union(variables('builtinTags'), json(parameters('tags'))))]",
+        "lpPoolId": "[resourceId('Microsoft.Network/loadBalancers/backendAddressPools', variables('loadBalancerName'), concat(variables('prefix'),'LoadBalancerBEPool'))]",
+        "lbPools": [
+            {
+                "id": "[variables('lpPoolId')]"
+            }
+        ],
+        "ppg": {
+            "id": "[resourceId('Microsoft.Compute/proximityPlacementGroups',variables('ppgName'))]"
+        },
+        "subnetsHA": [
+            {
+                "name": "[variables('dataSubnetName')]",
+                "properties": {
+                    "addressPrefix": "[parameters('dataSubnetCIDR')]",
+                    "networkSecurityGroup": {
+                        "id": "[resourceId('Microsoft.Network/networkSecurityGroups', variables('nsgName'))]"
+                    },
+                    "privateEndpointNetworkPolicies": "Enabled",
+                    "privateLinkServiceNetworkPolicies": "Enabled"
+                }
+            },
+            {
+                "name": "[variables('HASubnetName')]",
+                "properties": {
+                    "addressPrefix": "[variables('HASubnetCIDR')]",
+                    "networkSecurityGroup": {
+                        "id": "[resourceId('Microsoft.Network/networkSecurityGroups', variables('nsgName'))]"
+                    },
+                    "privateEndpointNetworkPolicies": "Enabled",
+                    "privateLinkServiceNetworkPolicies": "Enabled"
+                }
+            }
+        ],
+        "subnetsSA": [
+            {
+                "name": "[variables('dataSubnetName')]",
+                "properties": {
+                    "addressPrefix": "[parameters('dataSubnetCIDR')]",
+                    "networkSecurityGroup": {
+                        "id": "[resourceId('Microsoft.Network/networkSecurityGroups', variables('nsgName'))]"
+                    },
+                    "privateEndpointNetworkPolicies": "Enabled",
+                    "privateLinkServiceNetworkPolicies": "Enabled"
+                }
+            }
+        ],
+        "anvil1NetProfileStandalone": {
+            "networkInterfaces": [
+                {
+                    "properties": {
+                        "primary": true
+                    },
+                    "id": "[resourceId('Microsoft.Network/networkInterfaces/', variables('anvil1DataIface'))]"
+                }
+            ]
+        },
+        "anvil1NetProfileHA": {
+            "networkInterfaces": [
+                {
+                    "properties": {
+                        "primary": true
+                    },
+                    "id": "[resourceId('Microsoft.Network/networkInterfaces/', variables('anvil1DataIface'))]"
+                },
+                {
+                    "properties": {
+                        "primary": false
+                    },
+                    "id": "[resourceId('Microsoft.Network/networkInterfaces/', variables('anvil1HaIface'))]"
+                }
+            ]
+        },
+        "anvilStorageProfile": {
+            "imageReference": {
+                "publisher": "hammerspace",
+                "offer": "[variables('offer')]",
+                "sku": "hammerspace_5_0",
+                "version": "latest"
+            },
+            "osDisk": {
+                "createOption": "FromImage",
+                "managedDisk": {
+                    "storageAccountType": "[variables('anvilOsStorageType')]"
+                },
+                "diskSizeGB": "[parameters('anvilBootDiskSize')]"
+            },
+            "dataDisks": [
+                {
+                    "lun": 1,
+                    "createOption": "Empty",
+                    "managedDisk": {
+                        "storageAccountType": "[variables('anvilDataStorageType')]"
+                    },
+                    "diskSizeGB": "[parameters('anvilMetadataDiskSize')]"
+                }
+            ]
+        },
+        "anvilAvailabilitySet": {
+            "id": "[resourceId('Microsoft.Compute/availabilitySets/', variables('anvilAvailSetName'))]"
+        },
+        "dsxAvailabilitySet": {
+            "id": "[resourceId('Microsoft.Compute/availabilitySets/', variables('dsxAvailSetName'))]"
+        },
+        "ppgDef": {
+            "id": "[resourceId('Microsoft.Compute/proximityPlacementGroups', variables('ppgName'))]"
+        },
+        "anvilCustomData": {
+            "cluster": {
+                "domainname": "[variables('domain')]"
+            },
+            "node": {
+                "hostname": "[concat(variables('prefix'),'Anvil')]",
+                "ha_mode": "Standalone"
+            }
+        },
+        "anvil1CustomData": {
+            "cluster": {
+                "domainname": "[variables('domain')]"
+            },
+            "node": {
+                "hostname": "[concat(variables('prefix'),'Anvil')]",
+                "ha_mode": "Secondary",
+                "networks": {
+                    "eth0": {
+                        "cluster_ips": [
+                            "[concat('@ANVILIP@/', variables('dataNetNum'))]"
+                        ]
+                    },
+                    "eth1": {
+                        "dhcp": true
+                    }
+                }
+            }
+        },
+        "anvil2CustomData": {
+            "cluster": {
+                "domainname": "[variables('domain')]"
+            },
+            "node": {
+                "hostname": "[concat(variables('prefix'),'Anvil-2')]",
+                "ha_mode": "Primary",
+                "networks": {
+                    "eth0": {
+                        "cluster_ips": [
+                            "[concat('@ANVILIP@/', variables('dataNetNum'))]"
+                        ]
+                    },
+                    "eth1": {
+                        "dhcp": true
+                    }
+                }
+            }
+        },
+        "dsxCustomData": {
+            "cluster": {
+                "domainname": "[variables('domain')]",
+                "metadata": {
+                    "ips": [
+                        "[concat('@ANVILIP@/', variables('dataNetNum'))]"
+                    ]
+                }
+            },
+            "node": {
+                "features": [
+                    "portal",
+                    "storage"
+                ],
+                "add_volumes": true,
+                "storage": {
+                    "options": "[if(equals(parameters('DSXDataDiskStriping'), 'Enable'), createArray('raid0'), createArray())]"
+                },
+                "hostname": "[concat(variables('prefix'),'Dsx@INDEX@')]"
+            }
+        },
+        "noPremiumStorage": [
+            "Standard_D2_v3",
+            "Standard_D4_v3",
+            "Standard_D8_v3",
+            "Standard_D16_v3",
+            "Standard_D32_v3",
+            "Standard_D48_v3",
+            "Standard_D64_v3",
+            "Standard_D2a_v4",
+            "Standard_D4a_v4",
+            "Standard_D8a_v4",
+            "Standard_D16a_v4",
+            "Standard_D32a_v4",
+            "Standard_D48a_v4",
+            "Standard_D64a_v4",
+            "Standard_D96a_v4",
+            "Standard_D2_v2",
+            "Standard_D3_v2",
+            "Standard_D4_v2",
+            "Standard_D5_v2",
+            "Standard_E2_v3",
+            "Standard_E4_v3",
+            "Standard_E8_v3",
+            "Standard_E16_v3",
+            "Standard_E20_v3",
+            "Standard_E32_v3",
+            "Standard_E48_v3",
+            "Standard_E64_v3",
+            "Standard_E64i_v3",
+            "Standard_E2a_v4",
+            "Standard_E4a_v4",
+            "Standard_E8a_v4",
+            "Standard_E16a_v4",
+            "Standard_E20a_v4",
+            "Standard_E32a_v4",
+            "Standard_E48a_v4",
+            "Standard_E64a_v4",
+            "Standard_E96a_v4",
+            "Standard_D11_v2",
+            "Standard_D12_v2",
+            "Standard_D13_v2",
+            "Standard_D14_v2",
+            "Standard_D15_v2",
+            "Standard_A2_v2",
+            "Standard_A4_v2",
+            "Standard_A8_v2",
+            "Standard_A2m_v2",
+            "Standard_A4m_v2",
+            "Standard_A8m_v2",
+            "Standard_H8",
+            "Standard_H16",
+            "Standard_H8m",
+            "Standard_H16m",
+            "Standard_H16r",
+            "Standard_H16mr",
+            "Standard_F2",
+            "Standard_F4",
+            "Standard_F8",
+            "Standard_F16",
+            "Basic_A3",
+            "Basic_A4",
+            "Standard_A3",
+            "Standard_A4",
+            "Standard_A5",
+            "Standard_A6",
+            "Standard_A7",
+            "Standard_A8",
+            "Standard_A9",
+            "Standard_A10",
+            "Standard_A11",
+            "Standard_D2",
+            "Standard_D3",
+            "Standard_D4",
+            "Standard_D11",
+            "Standard_D12",
+            "Standard_D13",
+            "Standard_D14",
+            "Standard_G1",
+            "Standard_G2",
+            "Standard_G3",
+            "Standard_G4",
+            "Standard_G5"
+        ],
+        "anvilDefaultStorageType": "[if(contains(variables('noPremiumStorage'), parameters('anvilInstanceType')), 'StandardSSD_LRS', 'Premium_LRS')]",
+        "dsxDefaultStorageType": "[if(contains(variables('noPremiumStorage'), parameters('DSXInstanceType')), 'StandardSSD_LRS', 'Premium_LRS')]",
+        "anvilOsStorageType": "[if(equals(parameters('anvilBootDiskStorageType'), 'Default'), variables('anvilDefaultStorageType'), parameters('anvilBootDiskStorageType'))]",
+        "anvilDataStorageType": "[if(equals(parameters('anvilMetadataDiskStorageType'), 'Default'), variables('anvilDefaultStorageType'), parameters('anvilMetadataDiskStorageType'))]",
+        "dsx10": "[concat(variables('prefix'), 'Dsx10' )]",
+        "dsx10PubIP": "[concat(variables('prefix'), 'Dsx10PubIP' )]",
+        "dsx10DataIface": "[concat(variables('prefix'),'Dsx10DataIface')]",
+        "dsx9": "[concat(variables('prefix'), 'Dsx9' )]",
+        "dsx9PubIP": "[concat(variables('prefix'), 'Dsx9PubIP' )]",
+        "dsx9DataIface": "[concat(variables('prefix'),'Dsx9DataIface')]",
+        "dsx8": "[concat(variables('prefix'), 'Dsx8' )]",
+        "dsx8PubIP": "[concat(variables('prefix'), 'Dsx8PubIP' )]",
+        "dsx8DataIface": "[concat(variables('prefix'),'Dsx8DataIface')]",
+        "dsx7": "[concat(variables('prefix'), 'Dsx7' )]",
+        "dsx7PubIP": "[concat(variables('prefix'), 'Dsx7PubIP' )]",
+        "dsx7DataIface": "[concat(variables('prefix'),'Dsx7DataIface')]",
+        "dsx6": "[concat(variables('prefix'), 'Dsx6' )]",
+        "dsx6PubIP": "[concat(variables('prefix'), 'Dsx6PubIP' )]",
+        "dsx6DataIface": "[concat(variables('prefix'),'Dsx6DataIface')]",
+        "dsx5": "[concat(variables('prefix'), 'Dsx5' )]",
+        "dsx5PubIP": "[concat(variables('prefix'), 'Dsx5PubIP' )]",
+        "dsx5DataIface": "[concat(variables('prefix'),'Dsx5DataIface')]",
+        "dsx4": "[concat(variables('prefix'), 'Dsx4' )]",
+        "dsx4PubIP": "[concat(variables('prefix'), 'Dsx4PubIP' )]",
+        "dsx4DataIface": "[concat(variables('prefix'),'Dsx4DataIface')]",
+        "dsx3": "[concat(variables('prefix'), 'Dsx3' )]",
+        "dsx3PubIP": "[concat(variables('prefix'), 'Dsx3PubIP' )]",
+        "dsx3DataIface": "[concat(variables('prefix'),'Dsx3DataIface')]",
+        "dsx2": "[concat(variables('prefix'), 'Dsx2' )]",
+        "dsx2PubIP": "[concat(variables('prefix'), 'Dsx2PubIP' )]",
+        "dsx2DataIface": "[concat(variables('prefix'),'Dsx2DataIface')]",
+        "dsx1": "[concat(variables('prefix'), 'Dsx1' )]",
+        "dsx1PubIP": "[concat(variables('prefix'), 'Dsx1PubIP' )]",
+        "dsx1DataIface": "[concat(variables('prefix'),'Dsx1DataIface')]",
+        "dsxOsStorageType": "[if(equals(parameters('DSXBootDiskStorageType'), 'Default'), variables('dsxDefaultStorageType'), parameters('DSXBootDiskStorageType'))]",
+        "dsxDataStorageType": "[if(equals(parameters('DSXDataDiskStorageType'), 'Default'), variables('dsxDefaultStorageType'), parameters('DSXDataDiskStorageType'))]"
+    },
+    "functions": [
+        {
+            "namespace": "hsfunc",
+            "members": {
+                "pubIp": {
+                    "parameters": [
+                        {
+                            "name": "ipName",
+                            "type": "string"
+                        }
+                    ],
+                    "output": {
+                        "type": "object",
+                        "value": {
+                            "id": "[resourceId('Microsoft.Network/publicIPAddresses', parameters('ipName'))]"
+                        }
+                    }
+                },
+                "normalize": {
+                    "parameters": [
+                        {
+                            "name": "ins",
+                            "type": "string"
+                        }
+                    ],
+                    "output": {
+                        "type": "string",
+                        "value": "[replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(parameters('ins'), '!', ''), '@', ''), '#', ''), '$', ''), '%', ''), '^', ''), '&', ''), '*', ''), '(', ''), ')', ''), '_', ''), '+', ''), '=', ''), ':', ''), ';', ''), '?', ''), '/', ''), '.', ''), '>', ''), ',', ''), '<', '')]"
+                    }
+                }
+            }
+        }
+    ],
+    "resources": [
+        {
+            "name": "pid-b6f8230a-efe8-4d07-b584-52fc53674171-partnercenter",
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2020-10-01",
+            "properties": {
+                "mode": "Incremental",
+                "template": {
+                    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+                    "contentVersion": "1.0.0.0",
+                    "resources": []
+                }
+            }
+        },
+        {
+            "apiVersion": "2021-07-01",
+            "type": "Microsoft.Compute/proximityPlacementGroups",
+            "condition": "[variables('createPPG')]",
+            "name": "[variables('ppgName')]",
+            "location": "[parameters('location')]"
+        },
+        {
+            "type": "Microsoft.Network/networkSecurityGroups",
+            "apiVersion": "2021-05-01",
+            "condition": "[and(variables('createNSG'), variables('createResources'))]",
+            "name": "[variables('nsgName')]",
+            "location": "[parameters('location')]",
+            "tags": "[variables('resourceTags')]",
+            "properties": {
+                "securityRules": [
+                    {
+                        "name": "[concat(variables('nsgName'), '-rule-in-2000')]",
+                        "properties": {
+                            "protocol": "*",
+                            "sourcePortRange": "*",
+                            "sourceAddressPrefix": "*",
+                            "destinationAddressPrefix": "*",
+                            "access": "Allow",
+                            "priority": 2000,
+                            "direction": "Inbound",
+                            "destinationPortRanges": [
+                                "22",
+                                "80",
+                                "111",
+                                "123",
+                                "137-139",
+                                "161",
+                                "443",
+                                "445",
+                                "662",
+                                "2049",
+                                "2224",
+                                "3049",
+                                "4379",
+                                "4505",
+                                "4506",
+                                "5405",
+                                "7789",
+                                "7790",
+                                "8443",
+                                "9000-9009",
+                                "9093",
+                                "9094-9099",
+                                "9292",
+                                "9298-9299",
+                                "9399",
+                                "20048",
+                                "20491",
+                                "20492",
+                                "21064",
+                                "30048",
+                                "30049"
+                            ]
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "type": "Microsoft.Network/virtualNetworks",
+            "apiVersion": "2021-05-01",
+            "condition": "[variables('createVNet')]",
+            "name": "[variables('vNetName')]",
+            "dependsOn": [
+                "[variables('nsgName')]"
+            ],
+            "location": "[parameters('location')]",
+            "tags": "[variables('resourceTags')]",
+            "properties": {
+                "addressSpace": {
+                    "addressPrefixes": [
+                        "[parameters('virtualNetworkCIDR')]"
+                    ]
+                },
+                "subnets": "[if(variables('createHA'), variables('subnetsHA'), variables('subnetsSA'))]",
+                "enableDdosProtection": false,
+                "enableVmProtection": false
+            }
+        },
+        {
+            "type": "Microsoft.Network/virtualNetworks/subnets",
+            "apiVersion": "2021-05-01",
+            "condition": "[variables('createVNet')]",
+            "name": "[variables('vNetDataSubnetName')]",
+            "dependsOn": [
+                "[variables('vNetName')]",
+                "[variables('nsgName')]"
+            ],
+            "properties": {
+                "addressPrefix": "[parameters('dataSubnetCIDR')]",
+                "networkSecurityGroup": {
+                    "id": "[resourceId('Microsoft.Network/networkSecurityGroups/', variables('nsgName'))]"
+                },
+                "privateEndpointNetworkPolicies": "Enabled",
+                "privateLinkServiceNetworkPolicies": "Enabled"
+            }
+        },
+        {
+            "type": "Microsoft.Network/virtualNetworks/subnets",
+            "apiVersion": "2021-05-01",
+            "condition": "[and(variables('createVNet'), variables('createHA'))]",
+            "name": "[variables('vNetHaSubnetName')]",
+            "dependsOn": [
+                "[variables('vNetName')]",
+                "[variables('nsgName')]"
+            ],
+            "properties": {
+                "addressPrefix": "[variables('HASubnetCIDR')]",
+                "networkSecurityGroup": {
+                    "id": "[resourceId('Microsoft.Network/networkSecurityGroups/', variables('nsgName'))]"
+                },
+                "privateEndpointNetworkPolicies": "Enabled",
+                "privateLinkServiceNetworkPolicies": "Enabled"
+            }
+        },
+        {
+            "type": "Microsoft.Compute/availabilitySets",
+            "apiVersion": "2021-07-01",
+            "name": "[variables('anvilAvailSetName')]",
+            "condition": "[and(variables('createAnvil'), variables('createAvailSets'))]",
+            "dependsOn": [
+                "[variables('ppgName')]"
+            ],
+            "location": "[parameters('location')]",
+            "tags": "[variables('resourceTags')]",
+            "properties": {
+                "platformFaultDomainCount": 2,
+                "proximityPlacementGroup": "[if(variables('usePPG'), variables('ppgDef'), json('null'))]"
+            },
+            "sku": {
+                "name": "Aligned"
+            }
+        },
+        {
+            "type": "Microsoft.Compute/availabilitySets",
+            "apiVersion": "2021-07-01",
+            "name": "[variables('dsxAvailSetName')]",
+            "condition": "[and(greaterOrEquals(parameters('DSXInstanceCount'), 1), variables('createAvailSets'))]",
+            "dependsOn": [
+                "[variables('ppgName')]"
+            ],
+            "location": "[parameters('location')]",
+            "tags": "[variables('resourceTags')]",
+            "properties": {
+                "platformFaultDomainCount": 2,
+                "proximityPlacementGroup": "[if(variables('usePPG'), variables('ppgDef'), json('null'))]"
+            },
+            "sku": {
+                "name": "Aligned"
+            }
+        },
+        {
+            "type": "Microsoft.Network/loadBalancers",
+            "apiVersion": "2021-05-01",
+            "name": "[variables('loadBalancerName')]",
+            "condition": "[variables('createHA')]",
+            "dependsOn": [
+                "[variables('vNetName')]",
+                "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('vNetName'), variables('dataSubnetName'))]"
+            ],
+            "location": "[parameters('location')]",
+            "tags": "[variables('resourceTags')]",
+            "sku": {
+                "name": "Standard"
+            },
+            "properties": {
+                "frontendIPConfigurations": [
+                    {
+                        "name": "[concat(variables('prefix'),'LoadBalancerFrontEnd')]",
+                        "properties": {
+                            "privateIPAllocationMethod": "[if(variables('dynamicClusterIP'), 'Dynamic', 'Static')]",
+                            "privateIPAddress": "[if(variables('dynamicClusterIP'), json('null'), parameters('anvilDataClusterIP'))]",
+                            "privateIPAddressVersion": "IPv4",
+                            "subnet": {
+                                "id": "[resourceId(variables('vNetResGroup'), 'Microsoft.Network/virtualNetworks/subnets', variables('vNetName'), variables('dataSubnetName'))]"
+                            }
+                        }
+                    }
+                ],
+                "backendAddressPools": [
+                    {
+                        "name": "[concat(variables('prefix'),'LoadBalancerBEPool')]"
+                    }
+                ],
+                "probes": [
+                    {
+                        "properties": {
+                            "protocol": "Tcp",
+                            "port": 4505,
+                            "intervalInSeconds": 15,
+                            "numberOfProbes": 2
+                        },
+                        "name": "[concat(variables('prefix'),'LoadBalancerProbe')]"
+                    }
+                ],
+                "loadBalancingRules": [
+                    {
+                        "properties": {
+                            "frontendIPConfiguration": {
+                                "id": "[resourceId('Microsoft.Network/loadBalancers/frontendIpConfigurations', variables('loadBalancerName'), concat(variables('prefix'),'LoadBalancerFrontEnd'))]"
+                            },
+                            "backendAddressPool": {
+                                "id": "[variables('lpPoolId')]"
+                            },
+                            "probe": {
+                                "id": "[resourceId('Microsoft.Network/loadBalancers/probes', variables('loadBalancerName'), concat(variables('prefix'),'LoadBalancerProbe'))]"
+                            },
+                            "protocol": "all",
+                            "frontendPort": 0,
+                            "backendPort": 0,
+                            "enableFloatingIP": true
+                        },
+                        "name": "[concat(variables('prefix'),'LoadBalancerRule')]"
+                    }
+                ]
+            }
+        },
+        {
+            "type": "Microsoft.Network/publicIpAddresses",
+            "apiVersion": "2021-05-01",
+            "condition": "[and(variables('publicIPAddresses'), variables('createAnvil'))]",
+            "name": "[variables('anvil1PubIpAddressName')]",
+            "location": "[parameters('location')]",
+            "tags": "[variables('resourceTags')]",
+            "properties": {
+                "publicIpAllocationMethod": "Static",
+                "publicIPAddressVersion": "IPv4"
+            },
+            "sku": {
+                "name": "Standard",
+                "tier": "Regional"
+            }
+        },
+        {
+            "type": "Microsoft.Network/publicIpAddresses",
+            "apiVersion": "2021-05-01",
+            "condition": "[and(variables('publicIPAddresses'), variables('createHA'))]",
+            "name": "[variables('anvil2PubIpAddressName')]",
+            "location": "[parameters('location')]",
+            "tags": "[variables('resourceTags')]",
+            "properties": {
+                "publicIpAllocationMethod": "Static",
+                "publicIPAddressVersion": "IPv4"
+            },
+            "sku": {
+                "name": "Standard",
+                "tier": "Regional"
+            }
+        },
+        {
+            "type": "Microsoft.Network/networkInterfaces",
+            "apiVersion": "2021-05-01",
+            "condition": "[variables('createAnvil')]",
+            "name": "[variables('anvil1DataIface')]",
+            "dependsOn": [
+                "[variables('nsgName')]",
+                "[variables('anvil1PubIpAddressName')]",
+                "[variables('vNetName')]",
+                "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('vNetName'), variables('dataSubnetName'))]",
+                "[variables('loadBalancerName')]"
+            ],
+            "location": "[parameters('location')]",
+            "tags": "[variables('resourceTags')]",
+            "properties": {
+                "primary": true,
+                "ipConfigurations": [
+                    {
+                        "name": "ipconfig1",
+                        "properties": {
+                            "primary": true,
+                            "privateIPAllocationMethod": "[if(or(variables('createHA'), variables('dynamicClusterIP')), 'Dynamic', 'Static')]",
+                            "privateIPAddress": "[if(or(variables('createHA'), variables('dynamicClusterIP')), json('null'), parameters('anvilDataClusterIP'))]",
+                            "publicIPAddress": "[if(variables('publicIPAddresses'), hsfunc.pubIp(variables('anvil1PubIpAddressName')), json('null'))]",
+                            "subnet": {
+                                "id": "[resourceId(variables('vNetResGroup'), 'Microsoft.Network/virtualNetworks/subnets', variables('vNetName'), variables('dataSubnetName'))]"
+                            },
+                            "loadBalancerBackendAddressPools": "[if(variables('highAvailability'), variables('lbPools'), json('null'))]"
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "type": "Microsoft.Network/networkInterfaces",
+            "apiVersion": "2021-05-01",
+            "condition": "[variables('createHA')]",
+            "name": "[variables('anvil1HaIface')]",
+            "dependsOn": [
+                "[variables('nsgName')]",
+                "[variables('vNetName')]",
+                "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('vNetName'), variables('HASubnetName'))]"
+            ],
+            "location": "[parameters('location')]",
+            "tags": "[variables('resourceTags')]",
+            "properties": {
+                "primary": false,
+                "ipConfigurations": [
+                    {
+                        "name": "ipconfig1",
+                        "properties": {
+                            "subnet": {
+                                "id": "[resourceId(variables('vNetResGroup'), 'Microsoft.Network/virtualNetworks/subnets', variables('vNetName'), variables('HASubnetName'))]"
+                            }
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "type": "Microsoft.Network/networkInterfaces",
+            "apiVersion": "2021-05-01",
+            "condition": "[variables('createHA')]",
+            "name": "[variables('anvil2DataIface')]",
+            "dependsOn": [
+                "[variables('nsgName')]",
+                "[variables('anvil2PubIpAddressName')]",
+                "[variables('vNetName')]",
+                "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('vNetName'), variables('dataSubnetName'))]",
+                "[variables('loadBalancerName')]"
+            ],
+            "location": "[parameters('location')]",
+            "tags": "[variables('resourceTags')]",
+            "properties": {
+                "primary": true,
+                "ipConfigurations": [
+                    {
+                        "name": "ipconfig1",
+                        "properties": {
+                            "primary": true,
+                            "publicIPAddress": "[if(variables('publicIPAddresses'), hsfunc.pubIp(variables('anvil2PubIpAddressName')), json('null'))]",
+                            "subnet": {
+                                "id": "[resourceId(variables('vNetResGroup'), 'Microsoft.Network/virtualNetworks/subnets', variables('vNetName'), variables('dataSubnetName'))]"
+                            },
+                            "loadBalancerBackendAddressPools": "[variables('lbPools')]"
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "type": "Microsoft.Network/networkInterfaces",
+            "apiVersion": "2021-05-01",
+            "condition": "[variables('createHA')]",
+            "name": "[variables('anvil2HaIface')]",
+            "dependsOn": [
+                "[variables('nsgName')]",
+                "[variables('vNetName')]",
+                "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('vNetName'), variables('HASubnetName'))]"
+            ],
+            "location": "[parameters('location')]",
+            "tags": "[variables('resourceTags')]",
+            "properties": {
+                "primary": false,
+                "ipConfigurations": [
+                    {
+                        "name": "ipconfig1",
+                        "properties": {
+                            "subnet": {
+                                "id": "[resourceId(variables('vNetResGroup'), 'Microsoft.Network/virtualNetworks/subnets', variables('vNetName'), variables('HASubnetName'))]"
+                            }
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "type": "Microsoft.Compute/virtualMachines",
+            "apiVersion": "2021-07-01",
+            "condition": "[variables('createAnvil')]",
+            "name": "[variables('anvil1Name')]",
+            "location": "[parameters('location')]",
+            "tags": "[variables('resourceTags')]",
+            "dependsOn": [
+                "[variables('anvil1DataIface')]",
+                "[variables('anvil1HaIface')]",
+                "[variables('anvilAvailSetName')]"
+            ],
+            "plan": {
+                "name": "hammerspace_5_0",
+                "publisher": "hammerspace",
+                "product": "[variables('offer')]"
+            },
+            "properties": {
+                "additionalCapabilities": {
+                    "ultraSSDEnabled": "[bool(if(equals(variables('anvilDataStorageType'), 'UltraSSD_LRS'), 'true', 'false'))]"
+                },
+                "availabilitySet": "[variables('anvilAvailabilitySet')]",
+                "hardwareProfile": {
+                    "vmSize": "[parameters('anvilInstanceType')]"
+                },
+                "networkProfile": "[if(variables('highAvailability'),  variables('anvil1NetProfileHA'), variables('anvil1NetProfileStandalone'))]",
+                "osProfile": {
+                    "computerName": "[concat(variables('prefix'),'Anvil')]",
+                    "adminUsername": "[concat('user', uniqueString(variables('prefix')))]",
+                    "adminPassword": "[concat(uniqueString(variables('prefix')), 'Hh7!')]",
+                    "allowExtensionOperations": true,
+                    "customData": "[base64(if(variables('createHA'), replace(string(variables('anvil1CustomData')), '@ANVILIP@', reference(variables('loadBalancerName')).frontendIPConfigurations[0].properties.privateIPAddress), string(variables('anvilCustomData'))))]"
+                },
+                "priority": "Regular",
+                "proximityPlacementGroup": "[if(variables('usePPG'), variables('ppg'), json('null'))]",
+                "storageProfile": "[variables('anvilStorageProfile')]"
+            }
+        },
+        {
+            "type": "Microsoft.Compute/virtualMachines/extensions",
+            "name": "[concat(variables('anvil1Name'), '/setAdminPassword')]",
+            "apiVersion": "2021-07-01",
+            "condition": "[variables('createAnvil')]",
+            "location": "[parameters('location')]",
+            "dependsOn": [
+                "[variables('anvil1Name')]"
+            ],
+            "properties": {
+                "publisher": "Microsoft.Azure.Extensions",
+                "type": "CustomScript",
+                "typeHandlerVersion": "2.0",
+                "autoUpgradeMinorVersion": true,
+                "protectedSettings": {
+                    "commandToExecute": "[concat('ADMIN_PASSWORD=\"', parameters('adminPassword'), '\" ', '/usr/bin/hs-init-admin-pw')]"
+                }
+            }
+        },
+        {
+            "name": "[variables('anvil2Name')]",
+            "type": "Microsoft.Compute/virtualMachines",
+            "apiVersion": "2021-07-01",
+            "condition": "[variables('createHA')]",
+            "location": "[parameters('location')]",
+            "tags": "[variables('resourceTags')]",
+            "dependsOn": [
+                "[variables('anvil2DataIface')]",
+                "[variables('anvil2HaIface')]",
+                "[variables('anvilAvailSetName')]"
+            ],
+            "plan": {
+                "name": "hammerspace_5_0",
+                "publisher": "hammerspace",
+                "product": "[variables('offer')]"
+            },
+            "properties": {
+                "additionalCapabilities": {
+                    "ultraSSDEnabled": "[bool(if(equals(variables('anvilDataStorageType'), 'UltraSSD_LRS'), 'true', 'false'))]"
+                },
+                "availabilitySet": "[variables('anvilAvailabilitySet')]",
+                "hardwareProfile": {
+                    "vmSize": "[parameters('anvilInstanceType')]"
+                },
+                "networkProfile": {
+                    "networkInterfaces": [
+                        {
+                            "properties": {
+                                "primary": true
+                            },
+                            "id": "[resourceId('Microsoft.Network/networkInterfaces/', variables('anvil2DataIface'))]"
+                        },
+                        {
+                            "properties": {
+                                "primary": false
+                            },
+                            "id": "[resourceId('Microsoft.Network/networkInterfaces/', variables('anvil2HaIface'))]"
+                        }
+                    ]
+                },
+                "osProfile": {
+                    "computerName": "[concat(variables('prefix'),'Anvil-2')]",
+                    "adminUsername": "[concat('user', uniqueString(variables('prefix')))]",
+                    "adminPassword": "[concat(uniqueString(variables('prefix')), 'Hh7!')]",
+                    "allowExtensionOperations": true,
+                    "customData": "[base64(if(variables('createHA'), replace(string(variables('anvil2CustomData')), '@ANVILIP@', reference(variables('loadBalancerName')).frontendIPConfigurations[0].properties.privateIPAddress), string(variables('anvilCustomData'))))]"
+                },
+                "priority": "Regular",
+                "proximityPlacementGroup": "[if(variables('usePPG'), variables('ppg'), json('null'))]",
+                "storageProfile": "[variables('anvilStorageProfile')]"
+            }
+        },
+        {
+            "type": "Microsoft.Compute/virtualMachines/extensions",
+            "name": "[concat(variables('anvil2Name'), '/setAdminPassword')]",
+            "apiVersion": "2021-07-01",
+            "condition": "[variables('createHA')]",
+            "location": "[parameters('location')]",
+            "dependsOn": [
+                "[variables('anvil2Name')]"
+            ],
+            "properties": {
+                "publisher": "Microsoft.Azure.Extensions",
+                "type": "CustomScript",
+                "typeHandlerVersion": "2.0",
+                "autoUpgradeMinorVersion": true,
+                "protectedSettings": {
+                    "commandToExecute": "[concat('ADMIN_PASSWORD=\"', parameters('adminPassword'), '\" ', '/usr/bin/hs-init-admin-pw')]"
+                }
+            }
+        },
+        {
+            "type": "Microsoft.Network/publicIpAddresses",
+            "apiVersion": "2021-05-01",
+            "name": "[variables('dsx10PubIP')]",
+            "condition": "[and(variables('publicIPAddresses'), greaterOrEquals(parameters('DSXInstanceCount'), 10))]",
+            "location": "[parameters('location')]",
+            "tags": "[variables('resourceTags')]",
+            "properties": {
+                "publicIpAllocationMethod": "Static",
+                "publicIPAddressVersion": "IPv4"
+            },
+            "sku": {
+                "name": "Standard",
+                "tier": "Regional"
+            }
+        },
+        {
+            "type": "Microsoft.Network/networkInterfaces",
+            "apiVersion": "2021-05-01",
+            "condition": "[greaterOrEquals(parameters('DSXInstanceCount'), 10)]",
+            "name": "[variables('dsx10DataIface')]",
+            "dependsOn": [
+                "[variables('nsgName')]",
+                "[variables('vNetName')]",
+                "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('vNetName'), variables('dataSubnetName'))]",
+                "[variables('dsx10PubIP')]"
+            ],
+            "location": "[parameters('location')]",
+            "tags": "[variables('resourceTags')]",
+            "properties": {
+                "ipConfigurations": [
+                    {
+                        "name": "ipconfig1",
+                        "properties": {
+                            "publicIPAddress": "[if(variables('publicIPAddresses'), hsfunc.pubIp(variables('dsx10PubIP')), json('null'))]",
+                            "subnet": {
+                                "id": "[resourceId(variables('vNetResGroup'), 'Microsoft.Network/virtualNetworks/subnets', variables('vNetName'), variables('dataSubnetName'))]"
+                            }
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "name": "[variables('dsx10')]",
+            "type": "Microsoft.Compute/virtualMachines",
+            "apiVersion": "2021-07-01",
+            "condition": "[greaterOrEquals(parameters('DSXInstanceCount'), 10)]",
+            "location": "[parameters('location')]",
+            "tags": "[variables('resourceTags')]",
+            "dependsOn": [
+                "[variables('dsxAvailSetName')]",
+                "[variables('dsx10DataIface')]",
+                "[variables('anvil1Name')]",
+                "[variables('anvil2Name')]"
+            ],
+            "plan": {
+                "name": "hammerspace_5_0",
+                "publisher": "hammerspace",
+                "product": "[variables('offer')]"
+            },
+            "properties": {
+                "additionalCapabilities": {
+                    "ultraSSDEnabled": "[bool(if(equals(variables('dsxDataStorageType'), 'UltraSSD_LRS'), 'true', 'false'))]"
+                },
+                "availabilitySet": "[variables('dsxAvailabilitySet')]",
+                "hardwareProfile": {
+                    "vmSize": "[parameters('DSXInstanceType')]"
+                },
+                "networkProfile": {
+                    "networkInterfaces": [
+                        {
+                            "id": "[resourceId('Microsoft.Network/networkInterfaces/', variables('dsx10DataIface'))]"
+                        }
+                    ]
+                },
+                "osProfile": {
+                    "computerName": "[concat(variables('prefix'),'Dsx10')]",
+                    "adminUsername": "[concat('user', uniqueString(variables('prefix')))]",
+                    "adminPassword": "[concat(uniqueString(variables('prefix')), 'Hh7!')]",
+                    "customData": "[base64(replace(replace(string(variables('dsxCustomData')), '@INDEX@', '10'), '@ANVILIP@', if(variables('dynamicClusterIP'), if(variables('createHA'), reference(variables('loadBalancerName')).frontendIPConfigurations[0].properties.privateIPAddress, reference(variables('anvil1DataIface')).ipConfigurations[0].properties.privateIPAddress), parameters('anvilDataClusterIP'))))]"
+                },
+                "priority": "Regular",
+                "proximityPlacementGroup": "[if(variables('usePPG'), variables('ppg'), json('null'))]",
+                "storageProfile": {
+                    "imageReference": {
+                        "publisher": "hammerspace",
+                        "offer": "[variables('offer')]",
+                        "sku": "hammerspace_5_0",
+                        "version": "latest"
+                    },
+                    "osDisk": {
+                        "createOption": "FromImage",
+                        "managedDisk": {
+                            "storageAccountType": "[variables('dsxOsStorageType')]"
+                        },
+                        "diskSizeGB": "[parameters('DSXBootDiskSize')]"
+                    },
+                    "copy": [
+                        {
+                            "name": "dataDisks",
+                            "count": "[parameters('DSXDataDiskCount')]",
+                            "input": {
+                                "lun": "[copyIndex('dataDisks')]",
+                                "createOption": "Empty",
+                                "managedDisk": {
+                                    "storageAccountType": "[variables('dsxDataStorageType')]"
+                                },
+                                "diskSizeGB": "[parameters('DSXDataDiskSize')]"
+                            }
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "type": "Microsoft.Compute/virtualMachines/extensions",
+            "name": "[concat(variables('dsx10'), '/setAdminPassword')]",
+            "apiVersion": "2021-07-01",
+            "condition": "[greaterOrEquals(parameters('DSXInstanceCount'), 10)]",
+            "location": "[parameters('location')]",
+            "dependsOn": [
+                "[variables('dsx10')]"
+            ],
+            "properties": {
+                "publisher": "Microsoft.Azure.Extensions",
+                "type": "CustomScript",
+                "typeHandlerVersion": "2.0",
+                "autoUpgradeMinorVersion": true,
+                "protectedSettings": {
+                    "commandToExecute": "[concat('ADMIN_PASSWORD=\"', parameters('adminPassword'), '\" ', '/usr/bin/hs-init-admin-pw')]"
+                }
+            }
+        },
+        {
+            "type": "Microsoft.Network/publicIpAddresses",
+            "apiVersion": "2021-05-01",
+            "name": "[variables('dsx9PubIP')]",
+            "condition": "[and(variables('publicIPAddresses'), greaterOrEquals(parameters('DSXInstanceCount'), 9))]",
+            "location": "[parameters('location')]",
+            "tags": "[variables('resourceTags')]",
+            "properties": {
+                "publicIpAllocationMethod": "Static",
+                "publicIPAddressVersion": "IPv4"
+            },
+            "sku": {
+                "name": "Standard",
+                "tier": "Regional"
+            }
+        },
+        {
+            "type": "Microsoft.Network/networkInterfaces",
+            "apiVersion": "2021-05-01",
+            "condition": "[greaterOrEquals(parameters('DSXInstanceCount'), 9)]",
+            "name": "[variables('dsx9DataIface')]",
+            "dependsOn": [
+                "[variables('nsgName')]",
+                "[variables('vNetName')]",
+                "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('vNetName'), variables('dataSubnetName'))]",
+                "[variables('dsx9PubIP')]"
+            ],
+            "location": "[parameters('location')]",
+            "tags": "[variables('resourceTags')]",
+            "properties": {
+                "ipConfigurations": [
+                    {
+                        "name": "ipconfig1",
+                        "properties": {
+                            "publicIPAddress": "[if(variables('publicIPAddresses'), hsfunc.pubIp(variables('dsx9PubIP')), json('null'))]",
+                            "subnet": {
+                                "id": "[resourceId(variables('vNetResGroup'), 'Microsoft.Network/virtualNetworks/subnets', variables('vNetName'), variables('dataSubnetName'))]"
+                            }
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "name": "[variables('dsx9')]",
+            "type": "Microsoft.Compute/virtualMachines",
+            "apiVersion": "2021-07-01",
+            "condition": "[greaterOrEquals(parameters('DSXInstanceCount'), 9)]",
+            "location": "[parameters('location')]",
+            "tags": "[variables('resourceTags')]",
+            "dependsOn": [
+                "[variables('dsxAvailSetName')]",
+                "[variables('dsx9DataIface')]",
+                "[variables('anvil1Name')]",
+                "[variables('anvil2Name')]"
+            ],
+            "plan": {
+                "name": "hammerspace_5_0",
+                "publisher": "hammerspace",
+                "product": "[variables('offer')]"
+            },
+            "properties": {
+                "additionalCapabilities": {
+                    "ultraSSDEnabled": "[bool(if(equals(variables('dsxDataStorageType'), 'UltraSSD_LRS'), 'true', 'false'))]"
+                },
+                "availabilitySet": "[variables('dsxAvailabilitySet')]",
+                "hardwareProfile": {
+                    "vmSize": "[parameters('DSXInstanceType')]"
+                },
+                "networkProfile": {
+                    "networkInterfaces": [
+                        {
+                            "id": "[resourceId('Microsoft.Network/networkInterfaces/', variables('dsx9DataIface'))]"
+                        }
+                    ]
+                },
+                "osProfile": {
+                    "computerName": "[concat(variables('prefix'),'Dsx9')]",
+                    "adminUsername": "[concat('user', uniqueString(variables('prefix')))]",
+                    "adminPassword": "[concat(uniqueString(variables('prefix')), 'Hh7!')]",
+                    "customData": "[base64(replace(replace(string(variables('dsxCustomData')), '@INDEX@', '9'), '@ANVILIP@', if(variables('dynamicClusterIP'), if(variables('createHA'), reference(variables('loadBalancerName')).frontendIPConfigurations[0].properties.privateIPAddress, reference(variables('anvil1DataIface')).ipConfigurations[0].properties.privateIPAddress), parameters('anvilDataClusterIP'))))]"
+                },
+                "priority": "Regular",
+                "proximityPlacementGroup": "[if(variables('usePPG'), variables('ppg'), json('null'))]",
+                "storageProfile": {
+                    "imageReference": {
+                        "publisher": "hammerspace",
+                        "offer": "[variables('offer')]",
+                        "sku": "hammerspace_5_0",
+                        "version": "latest"
+                    },
+                    "osDisk": {
+                        "createOption": "FromImage",
+                        "managedDisk": {
+                            "storageAccountType": "[variables('dsxOsStorageType')]"
+                        },
+                        "diskSizeGB": "[parameters('DSXBootDiskSize')]"
+                    },
+                    "copy": [
+                        {
+                            "name": "dataDisks",
+                            "count": "[parameters('DSXDataDiskCount')]",
+                            "input": {
+                                "lun": "[copyIndex('dataDisks')]",
+                                "createOption": "Empty",
+                                "managedDisk": {
+                                    "storageAccountType": "[variables('dsxDataStorageType')]"
+                                },
+                                "diskSizeGB": "[parameters('DSXDataDiskSize')]"
+                            }
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "type": "Microsoft.Compute/virtualMachines/extensions",
+            "name": "[concat(variables('dsx9'), '/setAdminPassword')]",
+            "apiVersion": "2021-07-01",
+            "condition": "[greaterOrEquals(parameters('DSXInstanceCount'), 9)]",
+            "location": "[parameters('location')]",
+            "dependsOn": [
+                "[variables('dsx9')]"
+            ],
+            "properties": {
+                "publisher": "Microsoft.Azure.Extensions",
+                "type": "CustomScript",
+                "typeHandlerVersion": "2.0",
+                "autoUpgradeMinorVersion": true,
+                "protectedSettings": {
+                    "commandToExecute": "[concat('ADMIN_PASSWORD=\"', parameters('adminPassword'), '\" ', '/usr/bin/hs-init-admin-pw')]"
+                }
+            }
+        },
+        {
+            "type": "Microsoft.Network/publicIpAddresses",
+            "apiVersion": "2021-05-01",
+            "name": "[variables('dsx8PubIP')]",
+            "condition": "[and(variables('publicIPAddresses'), greaterOrEquals(parameters('DSXInstanceCount'), 8))]",
+            "location": "[parameters('location')]",
+            "tags": "[variables('resourceTags')]",
+            "properties": {
+                "publicIpAllocationMethod": "Static",
+                "publicIPAddressVersion": "IPv4"
+            },
+            "sku": {
+                "name": "Standard",
+                "tier": "Regional"
+            }
+        },
+        {
+            "type": "Microsoft.Network/networkInterfaces",
+            "apiVersion": "2021-05-01",
+            "condition": "[greaterOrEquals(parameters('DSXInstanceCount'), 8)]",
+            "name": "[variables('dsx8DataIface')]",
+            "dependsOn": [
+                "[variables('nsgName')]",
+                "[variables('vNetName')]",
+                "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('vNetName'), variables('dataSubnetName'))]",
+                "[variables('dsx8PubIP')]"
+            ],
+            "location": "[parameters('location')]",
+            "tags": "[variables('resourceTags')]",
+            "properties": {
+                "ipConfigurations": [
+                    {
+                        "name": "ipconfig1",
+                        "properties": {
+                            "publicIPAddress": "[if(variables('publicIPAddresses'), hsfunc.pubIp(variables('dsx8PubIP')), json('null'))]",
+                            "subnet": {
+                                "id": "[resourceId(variables('vNetResGroup'), 'Microsoft.Network/virtualNetworks/subnets', variables('vNetName'), variables('dataSubnetName'))]"
+                            }
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "name": "[variables('dsx8')]",
+            "type": "Microsoft.Compute/virtualMachines",
+            "apiVersion": "2021-07-01",
+            "condition": "[greaterOrEquals(parameters('DSXInstanceCount'), 8)]",
+            "location": "[parameters('location')]",
+            "tags": "[variables('resourceTags')]",
+            "dependsOn": [
+                "[variables('dsxAvailSetName')]",
+                "[variables('dsx8DataIface')]",
+                "[variables('anvil1Name')]",
+                "[variables('anvil2Name')]"
+            ],
+            "plan": {
+                "name": "hammerspace_5_0",
+                "publisher": "hammerspace",
+                "product": "[variables('offer')]"
+            },
+            "properties": {
+                "additionalCapabilities": {
+                    "ultraSSDEnabled": "[bool(if(equals(variables('dsxDataStorageType'), 'UltraSSD_LRS'), 'true', 'false'))]"
+                },
+                "availabilitySet": "[variables('dsxAvailabilitySet')]",
+                "hardwareProfile": {
+                    "vmSize": "[parameters('DSXInstanceType')]"
+                },
+                "networkProfile": {
+                    "networkInterfaces": [
+                        {
+                            "id": "[resourceId('Microsoft.Network/networkInterfaces/', variables('dsx8DataIface'))]"
+                        }
+                    ]
+                },
+                "osProfile": {
+                    "computerName": "[concat(variables('prefix'),'Dsx8')]",
+                    "adminUsername": "[concat('user', uniqueString(variables('prefix')))]",
+                    "adminPassword": "[concat(uniqueString(variables('prefix')), 'Hh7!')]",
+                    "customData": "[base64(replace(replace(string(variables('dsxCustomData')), '@INDEX@', '8'), '@ANVILIP@', if(variables('dynamicClusterIP'), if(variables('createHA'), reference(variables('loadBalancerName')).frontendIPConfigurations[0].properties.privateIPAddress, reference(variables('anvil1DataIface')).ipConfigurations[0].properties.privateIPAddress), parameters('anvilDataClusterIP'))))]"
+                },
+                "priority": "Regular",
+                "proximityPlacementGroup": "[if(variables('usePPG'), variables('ppg'), json('null'))]",
+                "storageProfile": {
+                    "imageReference": {
+                        "publisher": "hammerspace",
+                        "offer": "[variables('offer')]",
+                        "sku": "hammerspace_5_0",
+                        "version": "latest"
+                    },
+                    "osDisk": {
+                        "createOption": "FromImage",
+                        "managedDisk": {
+                            "storageAccountType": "[variables('dsxOsStorageType')]"
+                        },
+                        "diskSizeGB": "[parameters('DSXBootDiskSize')]"
+                    },
+                    "copy": [
+                        {
+                            "name": "dataDisks",
+                            "count": "[parameters('DSXDataDiskCount')]",
+                            "input": {
+                                "lun": "[copyIndex('dataDisks')]",
+                                "createOption": "Empty",
+                                "managedDisk": {
+                                    "storageAccountType": "[variables('dsxDataStorageType')]"
+                                },
+                                "diskSizeGB": "[parameters('DSXDataDiskSize')]"
+                            }
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "type": "Microsoft.Compute/virtualMachines/extensions",
+            "name": "[concat(variables('dsx8'), '/setAdminPassword')]",
+            "apiVersion": "2021-07-01",
+            "condition": "[greaterOrEquals(parameters('DSXInstanceCount'), 8)]",
+            "location": "[parameters('location')]",
+            "dependsOn": [
+                "[variables('dsx8')]"
+            ],
+            "properties": {
+                "publisher": "Microsoft.Azure.Extensions",
+                "type": "CustomScript",
+                "typeHandlerVersion": "2.0",
+                "autoUpgradeMinorVersion": true,
+                "protectedSettings": {
+                    "commandToExecute": "[concat('ADMIN_PASSWORD=\"', parameters('adminPassword'), '\" ', '/usr/bin/hs-init-admin-pw')]"
+                }
+            }
+        },
+        {
+            "type": "Microsoft.Network/publicIpAddresses",
+            "apiVersion": "2021-05-01",
+            "name": "[variables('dsx7PubIP')]",
+            "condition": "[and(variables('publicIPAddresses'), greaterOrEquals(parameters('DSXInstanceCount'), 7))]",
+            "location": "[parameters('location')]",
+            "tags": "[variables('resourceTags')]",
+            "properties": {
+                "publicIpAllocationMethod": "Static",
+                "publicIPAddressVersion": "IPv4"
+            },
+            "sku": {
+                "name": "Standard",
+                "tier": "Regional"
+            }
+        },
+        {
+            "type": "Microsoft.Network/networkInterfaces",
+            "apiVersion": "2021-05-01",
+            "condition": "[greaterOrEquals(parameters('DSXInstanceCount'), 7)]",
+            "name": "[variables('dsx7DataIface')]",
+            "dependsOn": [
+                "[variables('nsgName')]",
+                "[variables('vNetName')]",
+                "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('vNetName'), variables('dataSubnetName'))]",
+                "[variables('dsx7PubIP')]"
+            ],
+            "location": "[parameters('location')]",
+            "tags": "[variables('resourceTags')]",
+            "properties": {
+                "ipConfigurations": [
+                    {
+                        "name": "ipconfig1",
+                        "properties": {
+                            "publicIPAddress": "[if(variables('publicIPAddresses'), hsfunc.pubIp(variables('dsx7PubIP')), json('null'))]",
+                            "subnet": {
+                                "id": "[resourceId(variables('vNetResGroup'), 'Microsoft.Network/virtualNetworks/subnets', variables('vNetName'), variables('dataSubnetName'))]"
+                            }
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "name": "[variables('dsx7')]",
+            "type": "Microsoft.Compute/virtualMachines",
+            "apiVersion": "2021-07-01",
+            "condition": "[greaterOrEquals(parameters('DSXInstanceCount'), 7)]",
+            "location": "[parameters('location')]",
+            "tags": "[variables('resourceTags')]",
+            "dependsOn": [
+                "[variables('dsxAvailSetName')]",
+                "[variables('dsx7DataIface')]",
+                "[variables('anvil1Name')]",
+                "[variables('anvil2Name')]"
+            ],
+            "plan": {
+                "name": "hammerspace_5_0",
+                "publisher": "hammerspace",
+                "product": "[variables('offer')]"
+            },
+            "properties": {
+                "additionalCapabilities": {
+                    "ultraSSDEnabled": "[bool(if(equals(variables('dsxDataStorageType'), 'UltraSSD_LRS'), 'true', 'false'))]"
+                },
+                "availabilitySet": "[variables('dsxAvailabilitySet')]",
+                "hardwareProfile": {
+                    "vmSize": "[parameters('DSXInstanceType')]"
+                },
+                "networkProfile": {
+                    "networkInterfaces": [
+                        {
+                            "id": "[resourceId('Microsoft.Network/networkInterfaces/', variables('dsx7DataIface'))]"
+                        }
+                    ]
+                },
+                "osProfile": {
+                    "computerName": "[concat(variables('prefix'),'Dsx7')]",
+                    "adminUsername": "[concat('user', uniqueString(variables('prefix')))]",
+                    "adminPassword": "[concat(uniqueString(variables('prefix')), 'Hh7!')]",
+                    "customData": "[base64(replace(replace(string(variables('dsxCustomData')), '@INDEX@', '7'), '@ANVILIP@', if(variables('dynamicClusterIP'), if(variables('createHA'), reference(variables('loadBalancerName')).frontendIPConfigurations[0].properties.privateIPAddress, reference(variables('anvil1DataIface')).ipConfigurations[0].properties.privateIPAddress), parameters('anvilDataClusterIP'))))]"
+                },
+                "priority": "Regular",
+                "proximityPlacementGroup": "[if(variables('usePPG'), variables('ppg'), json('null'))]",
+                "storageProfile": {
+                    "imageReference": {
+                        "publisher": "hammerspace",
+                        "offer": "[variables('offer')]",
+                        "sku": "hammerspace_5_0",
+                        "version": "latest"
+                    },
+                    "osDisk": {
+                        "createOption": "FromImage",
+                        "managedDisk": {
+                            "storageAccountType": "[variables('dsxOsStorageType')]"
+                        },
+                        "diskSizeGB": "[parameters('DSXBootDiskSize')]"
+                    },
+                    "copy": [
+                        {
+                            "name": "dataDisks",
+                            "count": "[parameters('DSXDataDiskCount')]",
+                            "input": {
+                                "lun": "[copyIndex('dataDisks')]",
+                                "createOption": "Empty",
+                                "managedDisk": {
+                                    "storageAccountType": "[variables('dsxDataStorageType')]"
+                                },
+                                "diskSizeGB": "[parameters('DSXDataDiskSize')]"
+                            }
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "type": "Microsoft.Compute/virtualMachines/extensions",
+            "name": "[concat(variables('dsx7'), '/setAdminPassword')]",
+            "apiVersion": "2021-07-01",
+            "condition": "[greaterOrEquals(parameters('DSXInstanceCount'), 7)]",
+            "location": "[parameters('location')]",
+            "dependsOn": [
+                "[variables('dsx7')]"
+            ],
+            "properties": {
+                "publisher": "Microsoft.Azure.Extensions",
+                "type": "CustomScript",
+                "typeHandlerVersion": "2.0",
+                "autoUpgradeMinorVersion": true,
+                "protectedSettings": {
+                    "commandToExecute": "[concat('ADMIN_PASSWORD=\"', parameters('adminPassword'), '\" ', '/usr/bin/hs-init-admin-pw')]"
+                }
+            }
+        },
+        {
+            "type": "Microsoft.Network/publicIpAddresses",
+            "apiVersion": "2021-05-01",
+            "name": "[variables('dsx6PubIP')]",
+            "condition": "[and(variables('publicIPAddresses'), greaterOrEquals(parameters('DSXInstanceCount'), 6))]",
+            "location": "[parameters('location')]",
+            "tags": "[variables('resourceTags')]",
+            "properties": {
+                "publicIpAllocationMethod": "Static",
+                "publicIPAddressVersion": "IPv4"
+            },
+            "sku": {
+                "name": "Standard",
+                "tier": "Regional"
+            }
+        },
+        {
+            "type": "Microsoft.Network/networkInterfaces",
+            "apiVersion": "2021-05-01",
+            "condition": "[greaterOrEquals(parameters('DSXInstanceCount'), 6)]",
+            "name": "[variables('dsx6DataIface')]",
+            "dependsOn": [
+                "[variables('nsgName')]",
+                "[variables('vNetName')]",
+                "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('vNetName'), variables('dataSubnetName'))]",
+                "[variables('dsx6PubIP')]"
+            ],
+            "location": "[parameters('location')]",
+            "tags": "[variables('resourceTags')]",
+            "properties": {
+                "ipConfigurations": [
+                    {
+                        "name": "ipconfig1",
+                        "properties": {
+                            "publicIPAddress": "[if(variables('publicIPAddresses'), hsfunc.pubIp(variables('dsx6PubIP')), json('null'))]",
+                            "subnet": {
+                                "id": "[resourceId(variables('vNetResGroup'), 'Microsoft.Network/virtualNetworks/subnets', variables('vNetName'), variables('dataSubnetName'))]"
+                            }
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "name": "[variables('dsx6')]",
+            "type": "Microsoft.Compute/virtualMachines",
+            "apiVersion": "2021-07-01",
+            "condition": "[greaterOrEquals(parameters('DSXInstanceCount'), 6)]",
+            "location": "[parameters('location')]",
+            "tags": "[variables('resourceTags')]",
+            "dependsOn": [
+                "[variables('dsxAvailSetName')]",
+                "[variables('dsx6DataIface')]",
+                "[variables('anvil1Name')]",
+                "[variables('anvil2Name')]"
+            ],
+            "plan": {
+                "name": "hammerspace_5_0",
+                "publisher": "hammerspace",
+                "product": "[variables('offer')]"
+            },
+            "properties": {
+                "additionalCapabilities": {
+                    "ultraSSDEnabled": "[bool(if(equals(variables('dsxDataStorageType'), 'UltraSSD_LRS'), 'true', 'false'))]"
+                },
+                "availabilitySet": "[variables('dsxAvailabilitySet')]",
+                "hardwareProfile": {
+                    "vmSize": "[parameters('DSXInstanceType')]"
+                },
+                "networkProfile": {
+                    "networkInterfaces": [
+                        {
+                            "id": "[resourceId('Microsoft.Network/networkInterfaces/', variables('dsx6DataIface'))]"
+                        }
+                    ]
+                },
+                "osProfile": {
+                    "computerName": "[concat(variables('prefix'),'Dsx6')]",
+                    "adminUsername": "[concat('user', uniqueString(variables('prefix')))]",
+                    "adminPassword": "[concat(uniqueString(variables('prefix')), 'Hh7!')]",
+                    "customData": "[base64(replace(replace(string(variables('dsxCustomData')), '@INDEX@', '6'), '@ANVILIP@', if(variables('dynamicClusterIP'), if(variables('createHA'), reference(variables('loadBalancerName')).frontendIPConfigurations[0].properties.privateIPAddress, reference(variables('anvil1DataIface')).ipConfigurations[0].properties.privateIPAddress), parameters('anvilDataClusterIP'))))]"
+                },
+                "priority": "Regular",
+                "proximityPlacementGroup": "[if(variables('usePPG'), variables('ppg'), json('null'))]",
+                "storageProfile": {
+                    "imageReference": {
+                        "publisher": "hammerspace",
+                        "offer": "[variables('offer')]",
+                        "sku": "hammerspace_5_0",
+                        "version": "latest"
+                    },
+                    "osDisk": {
+                        "createOption": "FromImage",
+                        "managedDisk": {
+                            "storageAccountType": "[variables('dsxOsStorageType')]"
+                        },
+                        "diskSizeGB": "[parameters('DSXBootDiskSize')]"
+                    },
+                    "copy": [
+                        {
+                            "name": "dataDisks",
+                            "count": "[parameters('DSXDataDiskCount')]",
+                            "input": {
+                                "lun": "[copyIndex('dataDisks')]",
+                                "createOption": "Empty",
+                                "managedDisk": {
+                                    "storageAccountType": "[variables('dsxDataStorageType')]"
+                                },
+                                "diskSizeGB": "[parameters('DSXDataDiskSize')]"
+                            }
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "type": "Microsoft.Compute/virtualMachines/extensions",
+            "name": "[concat(variables('dsx6'), '/setAdminPassword')]",
+            "apiVersion": "2021-07-01",
+            "condition": "[greaterOrEquals(parameters('DSXInstanceCount'), 6)]",
+            "location": "[parameters('location')]",
+            "dependsOn": [
+                "[variables('dsx6')]"
+            ],
+            "properties": {
+                "publisher": "Microsoft.Azure.Extensions",
+                "type": "CustomScript",
+                "typeHandlerVersion": "2.0",
+                "autoUpgradeMinorVersion": true,
+                "protectedSettings": {
+                    "commandToExecute": "[concat('ADMIN_PASSWORD=\"', parameters('adminPassword'), '\" ', '/usr/bin/hs-init-admin-pw')]"
+                }
+            }
+        },
+        {
+            "type": "Microsoft.Network/publicIpAddresses",
+            "apiVersion": "2021-05-01",
+            "name": "[variables('dsx5PubIP')]",
+            "condition": "[and(variables('publicIPAddresses'), greaterOrEquals(parameters('DSXInstanceCount'), 5))]",
+            "location": "[parameters('location')]",
+            "tags": "[variables('resourceTags')]",
+            "properties": {
+                "publicIpAllocationMethod": "Static",
+                "publicIPAddressVersion": "IPv4"
+            },
+            "sku": {
+                "name": "Standard",
+                "tier": "Regional"
+            }
+        },
+        {
+            "type": "Microsoft.Network/networkInterfaces",
+            "apiVersion": "2021-05-01",
+            "condition": "[greaterOrEquals(parameters('DSXInstanceCount'), 5)]",
+            "name": "[variables('dsx5DataIface')]",
+            "dependsOn": [
+                "[variables('nsgName')]",
+                "[variables('vNetName')]",
+                "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('vNetName'), variables('dataSubnetName'))]",
+                "[variables('dsx5PubIP')]"
+            ],
+            "location": "[parameters('location')]",
+            "tags": "[variables('resourceTags')]",
+            "properties": {
+                "ipConfigurations": [
+                    {
+                        "name": "ipconfig1",
+                        "properties": {
+                            "publicIPAddress": "[if(variables('publicIPAddresses'), hsfunc.pubIp(variables('dsx5PubIP')), json('null'))]",
+                            "subnet": {
+                                "id": "[resourceId(variables('vNetResGroup'), 'Microsoft.Network/virtualNetworks/subnets', variables('vNetName'), variables('dataSubnetName'))]"
+                            }
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "name": "[variables('dsx5')]",
+            "type": "Microsoft.Compute/virtualMachines",
+            "apiVersion": "2021-07-01",
+            "condition": "[greaterOrEquals(parameters('DSXInstanceCount'), 5)]",
+            "location": "[parameters('location')]",
+            "tags": "[variables('resourceTags')]",
+            "dependsOn": [
+                "[variables('dsxAvailSetName')]",
+                "[variables('dsx5DataIface')]",
+                "[variables('anvil1Name')]",
+                "[variables('anvil2Name')]"
+            ],
+            "plan": {
+                "name": "hammerspace_5_0",
+                "publisher": "hammerspace",
+                "product": "[variables('offer')]"
+            },
+            "properties": {
+                "additionalCapabilities": {
+                    "ultraSSDEnabled": "[bool(if(equals(variables('dsxDataStorageType'), 'UltraSSD_LRS'), 'true', 'false'))]"
+                },
+                "availabilitySet": "[variables('dsxAvailabilitySet')]",
+                "hardwareProfile": {
+                    "vmSize": "[parameters('DSXInstanceType')]"
+                },
+                "networkProfile": {
+                    "networkInterfaces": [
+                        {
+                            "id": "[resourceId('Microsoft.Network/networkInterfaces/', variables('dsx5DataIface'))]"
+                        }
+                    ]
+                },
+                "osProfile": {
+                    "computerName": "[concat(variables('prefix'),'Dsx5')]",
+                    "adminUsername": "[concat('user', uniqueString(variables('prefix')))]",
+                    "adminPassword": "[concat(uniqueString(variables('prefix')), 'Hh7!')]",
+                    "customData": "[base64(replace(replace(string(variables('dsxCustomData')), '@INDEX@', '5'), '@ANVILIP@', if(variables('dynamicClusterIP'), if(variables('createHA'), reference(variables('loadBalancerName')).frontendIPConfigurations[0].properties.privateIPAddress, reference(variables('anvil1DataIface')).ipConfigurations[0].properties.privateIPAddress), parameters('anvilDataClusterIP'))))]"
+                },
+                "priority": "Regular",
+                "proximityPlacementGroup": "[if(variables('usePPG'), variables('ppg'), json('null'))]",
+                "storageProfile": {
+                    "imageReference": {
+                        "publisher": "hammerspace",
+                        "offer": "[variables('offer')]",
+                        "sku": "hammerspace_5_0",
+                        "version": "latest"
+                    },
+                    "osDisk": {
+                        "createOption": "FromImage",
+                        "managedDisk": {
+                            "storageAccountType": "[variables('dsxOsStorageType')]"
+                        },
+                        "diskSizeGB": "[parameters('DSXBootDiskSize')]"
+                    },
+                    "copy": [
+                        {
+                            "name": "dataDisks",
+                            "count": "[parameters('DSXDataDiskCount')]",
+                            "input": {
+                                "lun": "[copyIndex('dataDisks')]",
+                                "createOption": "Empty",
+                                "managedDisk": {
+                                    "storageAccountType": "[variables('dsxDataStorageType')]"
+                                },
+                                "diskSizeGB": "[parameters('DSXDataDiskSize')]"
+                            }
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "type": "Microsoft.Compute/virtualMachines/extensions",
+            "name": "[concat(variables('dsx5'), '/setAdminPassword')]",
+            "apiVersion": "2021-07-01",
+            "condition": "[greaterOrEquals(parameters('DSXInstanceCount'), 5)]",
+            "location": "[parameters('location')]",
+            "dependsOn": [
+                "[variables('dsx5')]"
+            ],
+            "properties": {
+                "publisher": "Microsoft.Azure.Extensions",
+                "type": "CustomScript",
+                "typeHandlerVersion": "2.0",
+                "autoUpgradeMinorVersion": true,
+                "protectedSettings": {
+                    "commandToExecute": "[concat('ADMIN_PASSWORD=\"', parameters('adminPassword'), '\" ', '/usr/bin/hs-init-admin-pw')]"
+                }
+            }
+        },
+        {
+            "type": "Microsoft.Network/publicIpAddresses",
+            "apiVersion": "2021-05-01",
+            "name": "[variables('dsx4PubIP')]",
+            "condition": "[and(variables('publicIPAddresses'), greaterOrEquals(parameters('DSXInstanceCount'), 4))]",
+            "location": "[parameters('location')]",
+            "tags": "[variables('resourceTags')]",
+            "properties": {
+                "publicIpAllocationMethod": "Static",
+                "publicIPAddressVersion": "IPv4"
+            },
+            "sku": {
+                "name": "Standard",
+                "tier": "Regional"
+            }
+        },
+        {
+            "type": "Microsoft.Network/networkInterfaces",
+            "apiVersion": "2021-05-01",
+            "condition": "[greaterOrEquals(parameters('DSXInstanceCount'), 4)]",
+            "name": "[variables('dsx4DataIface')]",
+            "dependsOn": [
+                "[variables('nsgName')]",
+                "[variables('vNetName')]",
+                "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('vNetName'), variables('dataSubnetName'))]",
+                "[variables('dsx4PubIP')]"
+            ],
+            "location": "[parameters('location')]",
+            "tags": "[variables('resourceTags')]",
+            "properties": {
+                "ipConfigurations": [
+                    {
+                        "name": "ipconfig1",
+                        "properties": {
+                            "publicIPAddress": "[if(variables('publicIPAddresses'), hsfunc.pubIp(variables('dsx4PubIP')), json('null'))]",
+                            "subnet": {
+                                "id": "[resourceId(variables('vNetResGroup'), 'Microsoft.Network/virtualNetworks/subnets', variables('vNetName'), variables('dataSubnetName'))]"
+                            }
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "name": "[variables('dsx4')]",
+            "type": "Microsoft.Compute/virtualMachines",
+            "apiVersion": "2021-07-01",
+            "condition": "[greaterOrEquals(parameters('DSXInstanceCount'), 4)]",
+            "location": "[parameters('location')]",
+            "tags": "[variables('resourceTags')]",
+            "dependsOn": [
+                "[variables('dsxAvailSetName')]",
+                "[variables('dsx4DataIface')]",
+                "[variables('anvil1Name')]",
+                "[variables('anvil2Name')]"
+            ],
+            "plan": {
+                "name": "hammerspace_5_0",
+                "publisher": "hammerspace",
+                "product": "[variables('offer')]"
+            },
+            "properties": {
+                "additionalCapabilities": {
+                    "ultraSSDEnabled": "[bool(if(equals(variables('dsxDataStorageType'), 'UltraSSD_LRS'), 'true', 'false'))]"
+                },
+                "availabilitySet": "[variables('dsxAvailabilitySet')]",
+                "hardwareProfile": {
+                    "vmSize": "[parameters('DSXInstanceType')]"
+                },
+                "networkProfile": {
+                    "networkInterfaces": [
+                        {
+                            "id": "[resourceId('Microsoft.Network/networkInterfaces/', variables('dsx4DataIface'))]"
+                        }
+                    ]
+                },
+                "osProfile": {
+                    "computerName": "[concat(variables('prefix'),'Dsx4')]",
+                    "adminUsername": "[concat('user', uniqueString(variables('prefix')))]",
+                    "adminPassword": "[concat(uniqueString(variables('prefix')), 'Hh7!')]",
+                    "customData": "[base64(replace(replace(string(variables('dsxCustomData')), '@INDEX@', '4'), '@ANVILIP@', if(variables('dynamicClusterIP'), if(variables('createHA'), reference(variables('loadBalancerName')).frontendIPConfigurations[0].properties.privateIPAddress, reference(variables('anvil1DataIface')).ipConfigurations[0].properties.privateIPAddress), parameters('anvilDataClusterIP'))))]"
+                },
+                "priority": "Regular",
+                "proximityPlacementGroup": "[if(variables('usePPG'), variables('ppg'), json('null'))]",
+                "storageProfile": {
+                    "imageReference": {
+                        "publisher": "hammerspace",
+                        "offer": "[variables('offer')]",
+                        "sku": "hammerspace_5_0",
+                        "version": "latest"
+                    },
+                    "osDisk": {
+                        "createOption": "FromImage",
+                        "managedDisk": {
+                            "storageAccountType": "[variables('dsxOsStorageType')]"
+                        },
+                        "diskSizeGB": "[parameters('DSXBootDiskSize')]"
+                    },
+                    "copy": [
+                        {
+                            "name": "dataDisks",
+                            "count": "[parameters('DSXDataDiskCount')]",
+                            "input": {
+                                "lun": "[copyIndex('dataDisks')]",
+                                "createOption": "Empty",
+                                "managedDisk": {
+                                    "storageAccountType": "[variables('dsxDataStorageType')]"
+                                },
+                                "diskSizeGB": "[parameters('DSXDataDiskSize')]"
+                            }
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "type": "Microsoft.Compute/virtualMachines/extensions",
+            "name": "[concat(variables('dsx4'), '/setAdminPassword')]",
+            "apiVersion": "2021-07-01",
+            "condition": "[greaterOrEquals(parameters('DSXInstanceCount'), 4)]",
+            "location": "[parameters('location')]",
+            "dependsOn": [
+                "[variables('dsx4')]"
+            ],
+            "properties": {
+                "publisher": "Microsoft.Azure.Extensions",
+                "type": "CustomScript",
+                "typeHandlerVersion": "2.0",
+                "autoUpgradeMinorVersion": true,
+                "protectedSettings": {
+                    "commandToExecute": "[concat('ADMIN_PASSWORD=\"', parameters('adminPassword'), '\" ', '/usr/bin/hs-init-admin-pw')]"
+                }
+            }
+        },
+        {
+            "type": "Microsoft.Network/publicIpAddresses",
+            "apiVersion": "2021-05-01",
+            "name": "[variables('dsx3PubIP')]",
+            "condition": "[and(variables('publicIPAddresses'), greaterOrEquals(parameters('DSXInstanceCount'), 3))]",
+            "location": "[parameters('location')]",
+            "tags": "[variables('resourceTags')]",
+            "properties": {
+                "publicIpAllocationMethod": "Static",
+                "publicIPAddressVersion": "IPv4"
+            },
+            "sku": {
+                "name": "Standard",
+                "tier": "Regional"
+            }
+        },
+        {
+            "type": "Microsoft.Network/networkInterfaces",
+            "apiVersion": "2021-05-01",
+            "condition": "[greaterOrEquals(parameters('DSXInstanceCount'), 3)]",
+            "name": "[variables('dsx3DataIface')]",
+            "dependsOn": [
+                "[variables('nsgName')]",
+                "[variables('vNetName')]",
+                "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('vNetName'), variables('dataSubnetName'))]",
+                "[variables('dsx3PubIP')]"
+            ],
+            "location": "[parameters('location')]",
+            "tags": "[variables('resourceTags')]",
+            "properties": {
+                "ipConfigurations": [
+                    {
+                        "name": "ipconfig1",
+                        "properties": {
+                            "publicIPAddress": "[if(variables('publicIPAddresses'), hsfunc.pubIp(variables('dsx3PubIP')), json('null'))]",
+                            "subnet": {
+                                "id": "[resourceId(variables('vNetResGroup'), 'Microsoft.Network/virtualNetworks/subnets', variables('vNetName'), variables('dataSubnetName'))]"
+                            }
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "name": "[variables('dsx3')]",
+            "type": "Microsoft.Compute/virtualMachines",
+            "apiVersion": "2021-07-01",
+            "condition": "[greaterOrEquals(parameters('DSXInstanceCount'), 3)]",
+            "location": "[parameters('location')]",
+            "tags": "[variables('resourceTags')]",
+            "dependsOn": [
+                "[variables('dsxAvailSetName')]",
+                "[variables('dsx3DataIface')]",
+                "[variables('anvil1Name')]",
+                "[variables('anvil2Name')]"
+            ],
+            "plan": {
+                "name": "hammerspace_5_0",
+                "publisher": "hammerspace",
+                "product": "[variables('offer')]"
+            },
+            "properties": {
+                "additionalCapabilities": {
+                    "ultraSSDEnabled": "[bool(if(equals(variables('dsxDataStorageType'), 'UltraSSD_LRS'), 'true', 'false'))]"
+                },
+                "availabilitySet": "[variables('dsxAvailabilitySet')]",
+                "hardwareProfile": {
+                    "vmSize": "[parameters('DSXInstanceType')]"
+                },
+                "networkProfile": {
+                    "networkInterfaces": [
+                        {
+                            "id": "[resourceId('Microsoft.Network/networkInterfaces/', variables('dsx3DataIface'))]"
+                        }
+                    ]
+                },
+                "osProfile": {
+                    "computerName": "[concat(variables('prefix'),'Dsx3')]",
+                    "adminUsername": "[concat('user', uniqueString(variables('prefix')))]",
+                    "adminPassword": "[concat(uniqueString(variables('prefix')), 'Hh7!')]",
+                    "customData": "[base64(replace(replace(string(variables('dsxCustomData')), '@INDEX@', '3'), '@ANVILIP@', if(variables('dynamicClusterIP'), if(variables('createHA'), reference(variables('loadBalancerName')).frontendIPConfigurations[0].properties.privateIPAddress, reference(variables('anvil1DataIface')).ipConfigurations[0].properties.privateIPAddress), parameters('anvilDataClusterIP'))))]"
+                },
+                "priority": "Regular",
+                "proximityPlacementGroup": "[if(variables('usePPG'), variables('ppg'), json('null'))]",
+                "storageProfile": {
+                    "imageReference": {
+                        "publisher": "hammerspace",
+                        "offer": "[variables('offer')]",
+                        "sku": "hammerspace_5_0",
+                        "version": "latest"
+                    },
+                    "osDisk": {
+                        "createOption": "FromImage",
+                        "managedDisk": {
+                            "storageAccountType": "[variables('dsxOsStorageType')]"
+                        },
+                        "diskSizeGB": "[parameters('DSXBootDiskSize')]"
+                    },
+                    "copy": [
+                        {
+                            "name": "dataDisks",
+                            "count": "[parameters('DSXDataDiskCount')]",
+                            "input": {
+                                "lun": "[copyIndex('dataDisks')]",
+                                "createOption": "Empty",
+                                "managedDisk": {
+                                    "storageAccountType": "[variables('dsxDataStorageType')]"
+                                },
+                                "diskSizeGB": "[parameters('DSXDataDiskSize')]"
+                            }
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "type": "Microsoft.Compute/virtualMachines/extensions",
+            "name": "[concat(variables('dsx3'), '/setAdminPassword')]",
+            "apiVersion": "2021-07-01",
+            "condition": "[greaterOrEquals(parameters('DSXInstanceCount'), 3)]",
+            "location": "[parameters('location')]",
+            "dependsOn": [
+                "[variables('dsx3')]"
+            ],
+            "properties": {
+                "publisher": "Microsoft.Azure.Extensions",
+                "type": "CustomScript",
+                "typeHandlerVersion": "2.0",
+                "autoUpgradeMinorVersion": true,
+                "protectedSettings": {
+                    "commandToExecute": "[concat('ADMIN_PASSWORD=\"', parameters('adminPassword'), '\" ', '/usr/bin/hs-init-admin-pw')]"
+                }
+            }
+        },
+        {
+            "type": "Microsoft.Network/publicIpAddresses",
+            "apiVersion": "2021-05-01",
+            "name": "[variables('dsx2PubIP')]",
+            "condition": "[and(variables('publicIPAddresses'), greaterOrEquals(parameters('DSXInstanceCount'), 2))]",
+            "location": "[parameters('location')]",
+            "tags": "[variables('resourceTags')]",
+            "properties": {
+                "publicIpAllocationMethod": "Static",
+                "publicIPAddressVersion": "IPv4"
+            },
+            "sku": {
+                "name": "Standard",
+                "tier": "Regional"
+            }
+        },
+        {
+            "type": "Microsoft.Network/networkInterfaces",
+            "apiVersion": "2021-05-01",
+            "condition": "[greaterOrEquals(parameters('DSXInstanceCount'), 2)]",
+            "name": "[variables('dsx2DataIface')]",
+            "dependsOn": [
+                "[variables('nsgName')]",
+                "[variables('vNetName')]",
+                "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('vNetName'), variables('dataSubnetName'))]",
+                "[variables('dsx2PubIP')]"
+            ],
+            "location": "[parameters('location')]",
+            "tags": "[variables('resourceTags')]",
+            "properties": {
+                "ipConfigurations": [
+                    {
+                        "name": "ipconfig1",
+                        "properties": {
+                            "publicIPAddress": "[if(variables('publicIPAddresses'), hsfunc.pubIp(variables('dsx2PubIP')), json('null'))]",
+                            "subnet": {
+                                "id": "[resourceId(variables('vNetResGroup'), 'Microsoft.Network/virtualNetworks/subnets', variables('vNetName'), variables('dataSubnetName'))]"
+                            }
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "name": "[variables('dsx2')]",
+            "type": "Microsoft.Compute/virtualMachines",
+            "apiVersion": "2021-07-01",
+            "condition": "[greaterOrEquals(parameters('DSXInstanceCount'), 2)]",
+            "location": "[parameters('location')]",
+            "tags": "[variables('resourceTags')]",
+            "dependsOn": [
+                "[variables('dsxAvailSetName')]",
+                "[variables('dsx2DataIface')]",
+                "[variables('anvil1Name')]",
+                "[variables('anvil2Name')]"
+            ],
+            "plan": {
+                "name": "hammerspace_5_0",
+                "publisher": "hammerspace",
+                "product": "[variables('offer')]"
+            },
+            "properties": {
+                "additionalCapabilities": {
+                    "ultraSSDEnabled": "[bool(if(equals(variables('dsxDataStorageType'), 'UltraSSD_LRS'), 'true', 'false'))]"
+                },
+                "availabilitySet": "[variables('dsxAvailabilitySet')]",
+                "hardwareProfile": {
+                    "vmSize": "[parameters('DSXInstanceType')]"
+                },
+                "networkProfile": {
+                    "networkInterfaces": [
+                        {
+                            "id": "[resourceId('Microsoft.Network/networkInterfaces/', variables('dsx2DataIface'))]"
+                        }
+                    ]
+                },
+                "osProfile": {
+                    "computerName": "[concat(variables('prefix'),'Dsx2')]",
+                    "adminUsername": "[concat('user', uniqueString(variables('prefix')))]",
+                    "adminPassword": "[concat(uniqueString(variables('prefix')), 'Hh7!')]",
+                    "customData": "[base64(replace(replace(string(variables('dsxCustomData')), '@INDEX@', '2'), '@ANVILIP@', if(variables('dynamicClusterIP'), if(variables('createHA'), reference(variables('loadBalancerName')).frontendIPConfigurations[0].properties.privateIPAddress, reference(variables('anvil1DataIface')).ipConfigurations[0].properties.privateIPAddress), parameters('anvilDataClusterIP'))))]"
+                },
+                "priority": "Regular",
+                "proximityPlacementGroup": "[if(variables('usePPG'), variables('ppg'), json('null'))]",
+                "storageProfile": {
+                    "imageReference": {
+                        "publisher": "hammerspace",
+                        "offer": "[variables('offer')]",
+                        "sku": "hammerspace_5_0",
+                        "version": "latest"
+                    },
+                    "osDisk": {
+                        "createOption": "FromImage",
+                        "managedDisk": {
+                            "storageAccountType": "[variables('dsxOsStorageType')]"
+                        },
+                        "diskSizeGB": "[parameters('DSXBootDiskSize')]"
+                    },
+                    "copy": [
+                        {
+                            "name": "dataDisks",
+                            "count": "[parameters('DSXDataDiskCount')]",
+                            "input": {
+                                "lun": "[copyIndex('dataDisks')]",
+                                "createOption": "Empty",
+                                "managedDisk": {
+                                    "storageAccountType": "[variables('dsxDataStorageType')]"
+                                },
+                                "diskSizeGB": "[parameters('DSXDataDiskSize')]"
+                            }
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "type": "Microsoft.Compute/virtualMachines/extensions",
+            "name": "[concat(variables('dsx2'), '/setAdminPassword')]",
+            "apiVersion": "2021-07-01",
+            "condition": "[greaterOrEquals(parameters('DSXInstanceCount'), 2)]",
+            "location": "[parameters('location')]",
+            "dependsOn": [
+                "[variables('dsx2')]"
+            ],
+            "properties": {
+                "publisher": "Microsoft.Azure.Extensions",
+                "type": "CustomScript",
+                "typeHandlerVersion": "2.0",
+                "autoUpgradeMinorVersion": true,
+                "protectedSettings": {
+                    "commandToExecute": "[concat('ADMIN_PASSWORD=\"', parameters('adminPassword'), '\" ', '/usr/bin/hs-init-admin-pw')]"
+                }
+            }
+        },
+        {
+            "type": "Microsoft.Network/publicIpAddresses",
+            "apiVersion": "2021-05-01",
+            "name": "[variables('dsx1PubIP')]",
+            "condition": "[and(variables('publicIPAddresses'), greaterOrEquals(parameters('DSXInstanceCount'), 1))]",
+            "location": "[parameters('location')]",
+            "tags": "[variables('resourceTags')]",
+            "properties": {
+                "publicIpAllocationMethod": "Static",
+                "publicIPAddressVersion": "IPv4"
+            },
+            "sku": {
+                "name": "Standard",
+                "tier": "Regional"
+            }
+        },
+        {
+            "type": "Microsoft.Network/networkInterfaces",
+            "apiVersion": "2021-05-01",
+            "condition": "[greaterOrEquals(parameters('DSXInstanceCount'), 1)]",
+            "name": "[variables('dsx1DataIface')]",
+            "dependsOn": [
+                "[variables('nsgName')]",
+                "[variables('vNetName')]",
+                "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('vNetName'), variables('dataSubnetName'))]",
+                "[variables('dsx1PubIP')]"
+            ],
+            "location": "[parameters('location')]",
+            "tags": "[variables('resourceTags')]",
+            "properties": {
+                "ipConfigurations": [
+                    {
+                        "name": "ipconfig1",
+                        "properties": {
+                            "publicIPAddress": "[if(variables('publicIPAddresses'), hsfunc.pubIp(variables('dsx1PubIP')), json('null'))]",
+                            "subnet": {
+                                "id": "[resourceId(variables('vNetResGroup'), 'Microsoft.Network/virtualNetworks/subnets', variables('vNetName'), variables('dataSubnetName'))]"
+                            }
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "name": "[variables('dsx1')]",
+            "type": "Microsoft.Compute/virtualMachines",
+            "apiVersion": "2021-07-01",
+            "condition": "[greaterOrEquals(parameters('DSXInstanceCount'), 1)]",
+            "location": "[parameters('location')]",
+            "tags": "[variables('resourceTags')]",
+            "dependsOn": [
+                "[variables('dsxAvailSetName')]",
+                "[variables('dsx1DataIface')]",
+                "[variables('anvil1Name')]",
+                "[variables('anvil2Name')]"
+            ],
+            "plan": {
+                "name": "hammerspace_5_0",
+                "publisher": "hammerspace",
+                "product": "[variables('offer')]"
+            },
+            "properties": {
+                "additionalCapabilities": {
+                    "ultraSSDEnabled": "[bool(if(equals(variables('dsxDataStorageType'), 'UltraSSD_LRS'), 'true', 'false'))]"
+                },
+                "availabilitySet": "[variables('dsxAvailabilitySet')]",
+                "hardwareProfile": {
+                    "vmSize": "[parameters('DSXInstanceType')]"
+                },
+                "networkProfile": {
+                    "networkInterfaces": [
+                        {
+                            "id": "[resourceId('Microsoft.Network/networkInterfaces/', variables('dsx1DataIface'))]"
+                        }
+                    ]
+                },
+                "osProfile": {
+                    "computerName": "[concat(variables('prefix'),'Dsx1')]",
+                    "adminUsername": "[concat('user', uniqueString(variables('prefix')))]",
+                    "adminPassword": "[concat(uniqueString(variables('prefix')), 'Hh7!')]",
+                    "customData": "[base64(replace(replace(string(variables('dsxCustomData')), '@INDEX@', '1'), '@ANVILIP@', if(variables('dynamicClusterIP'), if(variables('createHA'), reference(variables('loadBalancerName')).frontendIPConfigurations[0].properties.privateIPAddress, reference(variables('anvil1DataIface')).ipConfigurations[0].properties.privateIPAddress), parameters('anvilDataClusterIP'))))]"
+                },
+                "priority": "Regular",
+                "proximityPlacementGroup": "[if(variables('usePPG'), variables('ppg'), json('null'))]",
+                "storageProfile": {
+                    "imageReference": {
+                        "publisher": "hammerspace",
+                        "offer": "[variables('offer')]",
+                        "sku": "hammerspace_5_0",
+                        "version": "latest"
+                    },
+                    "osDisk": {
+                        "createOption": "FromImage",
+                        "managedDisk": {
+                            "storageAccountType": "[variables('dsxOsStorageType')]"
+                        },
+                        "diskSizeGB": "[parameters('DSXBootDiskSize')]"
+                    },
+                    "copy": [
+                        {
+                            "name": "dataDisks",
+                            "count": "[parameters('DSXDataDiskCount')]",
+                            "input": {
+                                "lun": "[copyIndex('dataDisks')]",
+                                "createOption": "Empty",
+                                "managedDisk": {
+                                    "storageAccountType": "[variables('dsxDataStorageType')]"
+                                },
+                                "diskSizeGB": "[parameters('DSXDataDiskSize')]"
+                            }
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "type": "Microsoft.Compute/virtualMachines/extensions",
+            "name": "[concat(variables('dsx1'), '/setAdminPassword')]",
+            "apiVersion": "2021-07-01",
+            "condition": "[greaterOrEquals(parameters('DSXInstanceCount'), 1)]",
+            "location": "[parameters('location')]",
+            "dependsOn": [
+                "[variables('dsx1')]"
+            ],
+            "properties": {
+                "publisher": "Microsoft.Azure.Extensions",
+                "type": "CustomScript",
+                "typeHandlerVersion": "2.0",
+                "autoUpgradeMinorVersion": true,
+                "protectedSettings": {
+                    "commandToExecute": "[concat('ADMIN_PASSWORD=\"', parameters('adminPassword'), '\" ', '/usr/bin/hs-init-admin-pw')]"
+                }
+            }
+        }
+    ],
+    "outputs": {
+        "deploymentName": {
+            "type": "string",
+            "value": "[parameters('name')]"
+        },
+        "anvilClusterDataIp": {
+            "type": "string",
+            "value": "[if(variables('dynamicClusterIP'), if(variables('highAvailability'), reference(variables('loadBalancerName')).frontendIPConfigurations[0].properties.privateIPAddress, reference(variables('anvil1DataIface')).ipConfigurations[0].properties.privateIPAddress), parameters('anvilDataClusterIP'))]"
+        },
+        "anvil1PublicDataIp": {
+            "condition": "[and(variables('publicIPAddresses'), variables('createAnvil'))]",
+            "type": "string",
+            "value": "[reference(variables('anvil1PubIpAddressName')).ipAddress]"
+        },
+        "anvil2PublicDataIp": {
+            "condition": "[and(variables('publicIPAddresses'), variables('createHA'))]",
+            "type": "string",
+            "value": "[reference(variables('anvil2PubIpAddressName')).ipAddress]"
+        },
+        "dsx10PublicDataIp": {
+            "condition": "[and(variables('publicIPAddresses'), greaterOrEquals(parameters('DSXInstanceCount'), 10))]",
+            "type": "string",
+            "value": "[reference(variables('dsx10PubIP')).ipAddress]"
+        },
+        "dsx9PublicDataIp": {
+            "condition": "[and(variables('publicIPAddresses'), greaterOrEquals(parameters('DSXInstanceCount'), 9))]",
+            "type": "string",
+            "value": "[reference(variables('dsx9PubIP')).ipAddress]"
+        },
+        "dsx8PublicDataIp": {
+            "condition": "[and(variables('publicIPAddresses'), greaterOrEquals(parameters('DSXInstanceCount'), 8))]",
+            "type": "string",
+            "value": "[reference(variables('dsx8PubIP')).ipAddress]"
+        },
+        "dsx7PublicDataIp": {
+            "condition": "[and(variables('publicIPAddresses'), greaterOrEquals(parameters('DSXInstanceCount'), 7))]",
+            "type": "string",
+            "value": "[reference(variables('dsx7PubIP')).ipAddress]"
+        },
+        "dsx6PublicDataIp": {
+            "condition": "[and(variables('publicIPAddresses'), greaterOrEquals(parameters('DSXInstanceCount'), 6))]",
+            "type": "string",
+            "value": "[reference(variables('dsx6PubIP')).ipAddress]"
+        },
+        "dsx5PublicDataIp": {
+            "condition": "[and(variables('publicIPAddresses'), greaterOrEquals(parameters('DSXInstanceCount'), 5))]",
+            "type": "string",
+            "value": "[reference(variables('dsx5PubIP')).ipAddress]"
+        },
+        "dsx4PublicDataIp": {
+            "condition": "[and(variables('publicIPAddresses'), greaterOrEquals(parameters('DSXInstanceCount'), 4))]",
+            "type": "string",
+            "value": "[reference(variables('dsx4PubIP')).ipAddress]"
+        },
+        "dsx3PublicDataIp": {
+            "condition": "[and(variables('publicIPAddresses'), greaterOrEquals(parameters('DSXInstanceCount'), 3))]",
+            "type": "string",
+            "value": "[reference(variables('dsx3PubIP')).ipAddress]"
+        },
+        "dsx2PublicDataIp": {
+            "condition": "[and(variables('publicIPAddresses'), greaterOrEquals(parameters('DSXInstanceCount'), 2))]",
+            "type": "string",
+            "value": "[reference(variables('dsx2PubIP')).ipAddress]"
+        },
+        "dsx1PublicDataIp": {
+            "condition": "[and(variables('publicIPAddresses'), greaterOrEquals(parameters('DSXInstanceCount'), 1))]",
+            "type": "string",
+            "value": "[reference(variables('dsx1PubIP')).ipAddress]"
+        }
+    }
+}
