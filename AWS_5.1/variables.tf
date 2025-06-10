@@ -23,48 +23,135 @@ variable "deployment_type" {
   default     = "Create a new Hammerspace solution"
 }
 
-variable "anvil_configuration" {
-  description = "Parameter for CloudFormation: High availability or Standalone Anvil."
+# Deployment Size Selection - NEW APPROACH
+variable "deployment_size" {
+  description = "Deployment size: starter, medium, large, or custom"
   type        = string
-  default     = "High Availability"
+  default     = "medium"
+  
+  validation {
+    condition     = contains(["starter", "medium", "large", "custom"], var.deployment_size)
+    error_message = "Deployment size must be starter, medium, large, or custom."
+  }
 }
 
-variable "anvil_type" {
-  description = "Parameter for CloudFormation: EC2 instance type for Anvil."
-  type        = string
-  default     = "m5.2xlarge" # CF default is "m5.2xlarge (8 vCPUs, 32 GiB Mem)"
+# Pre-defined deployment configurations - MATCHES GCP PATTERN
+variable "deployment_configs" {
+  description = "Pre-defined deployment configurations for AWS"
+  type = map(object({
+    anvil = object({
+      configuration      = string  
+      instance_type      = string  
+      meta_disk_size     = number  
+    })
+    dsx = object({
+      instance_count     = number  
+      instance_type      = string  
+      data_disk_size     = number  
+      add_volumes        = string  
+    })
+  }))
+  
+  default = {
+    starter = {
+      anvil = {
+        configuration  = "Standalone"                    
+        instance_type  = "r5a.xlarge (4 vCPUs, 32 GiB Mem)"  
+        meta_disk_size = 200
+      }
+      dsx = {
+        instance_count = 2                               
+        instance_type  = "r5a.xlarge (4 vCPUs, 32 GiB Mem)" 
+        data_disk_size = 200                             
+        add_volumes    = "Yes"
+      }
+    }
+    medium = {
+      anvil = {
+        configuration  = "High Availability"            
+        instance_type  = "r5a.4xlarge (16 vCPUs, 128 GiB Mem)"  
+        meta_disk_size = 200
+      }
+      dsx = {
+        instance_count = 5                               
+        instance_type  = "r5a.4xlarge (16 vCPUs, 128 GiB Mem)" 
+        data_disk_size = 200                             
+        add_volumes    = "Yes"
+      }
+    }
+    large = {
+      anvil = {
+        configuration  = "High Availability"            
+        instance_type  = "r6i.24xlarge (96 vCPUs, 768 GiB Mem)" 
+        meta_disk_size = 500                             
+      }
+      dsx = {
+        instance_count = 13                              
+        instance_type  = "r6i.24xlarge (96 vCPUs, 768 GiB Mem)" 
+        data_disk_size = 1024                           
+        add_volumes    = "Yes"
+      }
+    }
+    custom = {
+      anvil = {
+        configuration  = "Standalone"                    
+        instance_type  = "m5.xlarge (4 vCPUs, 16 GiB Mem)"
+        meta_disk_size = 200
+      }
+      dsx = {
+        instance_count = 2                               
+        instance_type  = "m5.2xlarge (8 vCPUs, 32 GiB Mem)"
+        data_disk_size = 200
+        add_volumes    = "Yes"
+      }
+    }
+  }
 }
 
-variable "dsx_type" {
-  description = "Parameter for CloudFormation: EC2 instance type for DSX."
+# Custom override variables (only used when deployment_size = "custom")
+variable "custom_anvil_configuration" {
+  description = "Custom Anvil configuration (used with deployment_size = custom)"
   type        = string
-  default     = "m5.xlarge" # CF default is "m5.xlarge (4 vCPUs, 16 GiB Mem)"
+  default     = null
 }
 
-variable "dsx_count" {
-  description = "Parameter for CloudFormation: Number of DSX instances."
+variable "custom_anvil_instance_type" {
+  description = "Custom Anvil instance type (used with deployment_size = custom)"
+  type        = string
+  default     = null
+}
+
+variable "custom_anvil_meta_disk_size" {
+  description = "Custom Anvil metadata disk size (used with deployment_size = custom)"
   type        = number
-  default     = 1
+  default     = null
 }
 
-variable "anvil_meta_disk_size" {
-  description = "Parameter for CloudFormation: Anvil Metadata Disk Size in GB."
+variable "custom_dsx_instance_count" {
+  description = "Custom DSX instance count (used with deployment_size = custom)"
   type        = number
-  default     = 200
+  default     = null
 }
 
-variable "dsx_data_disk_sz" {
-  description = "Parameter for CloudFormation: DSX Data Store Size in GB."
-  type        = number
-  default     = 200
-}
-
-variable "dsx_add_vols" {
-  description = "Parameter for CloudFormation: Automatically add additional volumes to Hammerspace."
+variable "custom_dsx_instance_type" {
+  description = "Custom DSX instance type (used with deployment_size = custom)"
   type        = string
-  default     = "Yes"
+  default     = null
 }
 
+variable "custom_dsx_data_disk_size" {
+  description = "Custom DSX data disk size (used with deployment_size = custom)"
+  type        = number
+  default     = null
+}
+
+variable "custom_dsx_add_volumes" {
+  description = "Custom DSX add volumes setting (used with deployment_size = custom)"
+  type        = string
+  default     = null
+}
+
+# Network and Infrastructure Variables - MUST BE IN TFVARS
 variable "vpc_id" {
   description = "Parameter for CloudFormation: VPC ID."
   type        = string
@@ -73,12 +160,35 @@ variable "vpc_id" {
 variable "az1" {
   description = "Parameter for CloudFormation: Availability Zone for Anvil."
   type        = string
-  # No default in CloudFormation.
 }
 
 variable "subnet_1_id" {
   description = "Parameter for CloudFormation: Data/Management Subnet ID."
   type        = string
+}
+
+variable "sec_ip_cidr" {
+  description = "Parameter for CloudFormation: Security Group IP/CIDR."
+  type        = string
+}
+
+# Optional Network Variables
+variable "az2" {
+  description = "Parameter for CloudFormation: Second AZ to use (optional)."
+  type        = string
+  default     = ""
+}
+
+variable "subnet_2_id" {
+  description = "Parameter for CloudFormation: Second Subnet ID (optional)."
+  type        = string
+  default     = ""
+}
+
+variable "route_table_ids" {
+  description = "Parameter for CloudFormation: Route Table ID (optional)."
+  type        = string
+  default     = ""
 }
 
 variable "cluster_ip" {
@@ -87,12 +197,7 @@ variable "cluster_ip" {
   default     = ""
 }
 
-variable "sec_ip_cidr" {
-  description = "Parameter for CloudFormation: Security Group IP/CIDR."
-  type        = string
-  # No default in CloudFormation.
-}
-
+# Security and Access Variables
 variable "profile_id" {
   description = "Parameter for CloudFormation: Instance Profile ID (optional)."
   type        = string
@@ -113,24 +218,6 @@ variable "iam_user_access" {
 
 variable "iam_admin_group_id" {
   description = "Parameter for CloudFormation: Admin IAM Group ID (optional)."
-  type        = string
-  default     = ""
-}
-
-variable "az2" {
-  description = "Parameter for CloudFormation: Second AZ to use (optional)."
-  type        = string
-  default     = ""
-}
-
-variable "subnet_2_id" {
-  description = "Parameter for CloudFormation: Second Subnet ID (optional)."
-  type        = string
-  default     = ""
-}
-
-variable "route_table_ids" {
-  description = "Parameter for CloudFormation: Route Table ID (optional)."
   type        = string
   default     = ""
 }

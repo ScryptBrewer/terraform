@@ -127,6 +127,7 @@ This project includes the following OpenTofu configuration files:
 2.  **Configure AWS Credentials & IAM Permissions**: Ensure your AWS default profile is configured and the IAM user has the `HammerspaceCloudFormationDeployerPolicy` (or equivalent) attached, as described above.
 
 3.  **Customize `terraform.tfvars`**:
+    There are 4 deployment-sizes availble [starter, medium, large, or custom]
     Open `terraform.tfvars` and update the placeholder values (e.g., `vpc_id`, `subnet_1_id`, `az1`, `sec_ip_cidr`) with your specific environment details. Review all other variables to ensure they match your desired Hammerspace configuration.
 
 4.  **Initialize OpenTofu**:

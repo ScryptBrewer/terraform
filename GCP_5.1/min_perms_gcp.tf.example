@@ -1,0 +1,56 @@
+# custom-role.tf
+resource "google_project_iam_custom_role" "hammerspace_minimal" {
+  role_id     = "hammerspace.minimal"
+  title       = "Hammerspace Minimal Permissions"
+  description = "Minimal permissions for Hammerspace deployment"
+  
+  permissions = [
+    # Instance management
+    "compute.instances.create",
+    "compute.instances.delete",
+    "compute.instances.get",
+    "compute.instances.list",
+    "compute.instances.setMetadata",
+    "compute.instances.setTags",
+    "compute.instances.start",
+    "compute.instances.stop",
+    
+    # Disk management
+    "compute.disks.create",
+    "compute.disks.delete",
+    "compute.disks.get",
+    "compute.disks.list",
+    "compute.disks.use",
+    
+    # Network access
+    "compute.networks.get",
+    "compute.networks.list",
+    "compute.subnetworks.get",
+    "compute.subnetworks.list",
+    "compute.subnetworks.use",
+    
+    # Image and machine type access
+    "compute.images.get",
+    "compute.images.list",
+    "compute.images.useReadOnly",
+    "compute.machineTypes.get",
+    "compute.machineTypes.list",
+    
+    # Zone and region access
+    "compute.zones.get",
+    "compute.zones.list",
+    "compute.regions.get",
+    "compute.regions.list"
+  ]
+}
+
+resource "google_service_account" "hammerspace_terraform" {
+  account_id   = "hammerspace-terraform"
+  display_name = "Hammerspace Terraform Service Account"
+}
+
+resource "google_project_iam_member" "hammerspace_custom_role" {
+  project = var.project_id
+  role    = google_project_iam_custom_role.hammerspace_minimal.name
+  member  = "serviceAccount:${google_service_account.hammerspace_terraform.email}"
+}
