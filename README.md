@@ -8,9 +8,9 @@
 
 ## 📁 Repository Structure
 
-AWS_5.1/ # AWS CloudFormation-based deployment
-GCP_5.1/ # Google Cloud Platform deployment
-Deployment/Vmware vSphere/ # VMware vSphere deployment
+* AWS_5.1/ # AWS CloudFormation-based deployment
+* GCP_5.1/ # Google Cloud Platform deployment
+* Deployment/Vmware vSphere/ # VMware vSphere deployment
 
 
 **Quick Deploy:**
