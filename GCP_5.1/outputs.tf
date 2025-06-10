@@ -46,16 +46,16 @@ output "deployment_configuration" {
   value = {
     deployment_size = var.deployment_size # Assuming var.deployment_size is a defined input
     anvil = {
-      instance_count = local.anvil_instance_count # Reflects actual count from main.tf logic
-      machine_type   = var.machine_type           # Direct var used for MDS machine type
-      data_disk_size = var.data_disk_size         # Direct var for MDS data disk size
-      data_disk_type = var.data_disk_type         # Direct var for MDS data disk type
+      instance_count = local.selected_config.anvil.instance_count
+      machine_type   = local.selected_config.anvil.machine_type
+      data_disk_size = local.selected_config.anvil.data_disk_size
+      data_disk_type = local.selected_config.anvil.data_disk_type
     }
     dsx = {
-      instance_count  = var.dsx_instance_count    # Reflects actual count for DSX
-      instance_type   = var.dsx_instance_type     # Direct var for DSX instance type
-      data_disk_count = var.dsx_data_disk_count   # Direct var for DSX data disk count
-      data_disk_size  = var.dsx_data_disk_size    # Direct var for DSX data disk size
+      instance_count  = local.selected_config.dsx.instance_count 
+      instance_type   = local.selected_config.dsx.instance_type
+      data_disk_count = local.selected_config.dsx.data_disk_count
+      data_disk_size  = local.selected_config.dsx.data_disk_size
     }
   }
 }

@@ -125,6 +125,12 @@ variable "custom_anvil_data_disk_size" {
   default     = null
 }
 
+variable "custom_anvil_data_disk_type" {
+  description = "Custom Anvil data disk count per server (used with deployment_size = custom)"
+  type        = number
+  default     = null
+}
+
 variable "custom_dsx_instance_count" {
   description = "Custom DSX instance count (used with deployment_size = custom)"
   type        = number

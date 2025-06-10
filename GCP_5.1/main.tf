@@ -141,55 +141,55 @@ resource "google_compute_instance" "hammerspace_mds" {
     }
   }
 
-  metadata = {
-    admin_user_password = var.admin_user_password
-    provision = local.final_anvil_instance_count <= 1 ? jsonencode({
-      node = {
-        ha_mode  = "Standalone",
+metadata = {
+  admin_user_password = var.admin_user_password
+  provision = local.final_anvil_instance_count <= 1 ? jsonencode({
+    node = {
+      ha_mode  = "Standalone",
+      features = ["metadata"],
+      hostname = "${var.goog_cm_deployment_name}-mds",
+      networks = {
+        eth0 = {
+          roles = ["data", "mgmt"]
+        }
+      }
+    }
+  }) : jsonencode({
+    cluster = {
+      password = var.admin_user_password
+    },
+    node_index = tostring(count.index),
+    nodes = {
+      "0" = {
         features = ["metadata"],
-        hostname = "${var.goog_cm_deployment_name}-mds",
+        hostname = "${var.goog_cm_deployment_name}-mds0",
+        ha_mode  = "Secondary",
         networks = {
           eth0 = {
-            roles = ["data", "mgmt"]
+            roles       = ["data", "mgmt", "ha"],
+            cluster_ips = ["${google_compute_address.hammerspace_mds_alias_ip.address}/${local.subnet_mask}"],
+            ips         = ["${google_compute_address.hammerspace_mds_ip[0].address}/${local.subnet_mask}"] 
           }
         }
-      }
-    }) : jsonencode({
-      cluster = {
-        password = var.admin_user_password
       },
-      node_index = tostring(count.index),
-      nodes = {
-        "0" = {
-          features = ["metadata"],
-          hostname = "${var.goog_cm_deployment_name}-mds0",
-          ha_mode  = "Secondary",
-          networks = {
-            eth0 = {
-              roles       = ["data", "mgmt", "ha"],
-              cluster_ips = ["${google_compute_address.hammerspace_mds_alias_ip.address}/${local.subnet_mask}"],
-              ips         = ["${google_compute_address.hammerspace_mds_ip1.address}/${local.subnet_mask}"]
-            }
-          }
-        },
-        "1" = {
-          features = ["metadata"],
-          hostname = "${var.goog_cm_deployment_name}-mds1",
-          ha_mode  = "Primary",
-          networks = {
-            eth0 = {
-              roles       = ["data", "mgmt", "ha"],
-              cluster_ips = ["${google_compute_address.hammerspace_mds_alias_ip.address}/${local.subnet_mask}"],
-              ips         = ["${google_compute_address.hammerspace_mds_ip2.address}/${local.subnet_mask}"]
-            }
+      "1" = {
+        features = ["metadata"],
+        hostname = "${var.goog_cm_deployment_name}-mds1",
+        ha_mode  = "Primary",
+        networks = {
+          eth0 = {
+            roles       = ["data", "mgmt", "ha"],
+            cluster_ips = ["${google_compute_address.hammerspace_mds_alias_ip.address}/${local.subnet_mask}"],
+            ips         = ["${google_compute_address.hammerspace_mds_ip[1].address}/${local.subnet_mask}"] 
           }
         }
       }
-    })
-    ATTACHED_DISKS           = "${var.goog_cm_deployment_name}-mds-disk1"
-    google-monitoring-enable = var.enable_monitoring
-    google-logging-enable    = var.enable_logging
-  }
+    }
+  })
+  ATTACHED_DISKS           = "${var.goog_cm_deployment_name}-mds-disk1"
+  google-monitoring-enable = var.enable_monitoring
+  google-logging-enable    = var.enable_logging
+}
   service_account {
     scopes = [
       "https://www.googleapis.com/auth/cloud-platform",
