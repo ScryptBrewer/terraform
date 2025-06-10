@@ -8,30 +8,10 @@
 
 ## 📁 Repository Structure
 
-├── AWS_5.1/ # AWS CloudFormation-based deployment
-│ ├── main.tf
-│ ├── variables.tf
-│ ├── terraform.tfvars
-│ └── README.md
-│ └── Hammerspace_CloudFormation_Deployer_IAM_Policy.json
-├── GCP_5.1/ # Google Cloud Platform deployment
-│ ├── main.tf
-│ ├── variables.tf
-│ ├── terraform.tfvars
-│ └── README.md
-│ └── min_perms_gcp.tf.example
-├── Deployment/Vmware vSphere/ # VMware vSphere deployment
-│ ├── High Availabilty/
-│ │ ├── main.tf
-│ │ └── variables.tf
-│ │ └── README.tf
-│ ├── StandAlone/
-│ │ ├── main.tf
-│ │ └── variables.tf
-│ │ └── README.tf
-│ ├── README.md
-│ ├── example.infrastructure.tfvars
-└── README.md # This file
+AWS_5.1/ # AWS CloudFormation-based deployment
+GCP_5.1/ # Google Cloud Platform deployment
+Deployment/Vmware vSphere/ # VMware vSphere deployment
+
 
 **Quick Deploy:**
 ```bash
