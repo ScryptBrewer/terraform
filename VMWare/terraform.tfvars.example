@@ -1,0 +1,51 @@
+# terraform.tfvars.example
+# vSphere Configuration
+vsphere_server      = "vcenter.example.com"
+vsphere_user        = "administrator@vsphere.local"
+vsphere_datacenter  = "Datacenter1"
+vsphere_resource_pool = "Resources"
+vsphere_host        = "esxi1.example.com"
+
+# Deployment Configuration
+deployment_size = "starter"  # "starter", "medium", "large", "custom"
+
+# VM Configuration
+vm_domain    = "example.com"
+prefix       = "hs-prod"
+vm_folder    = "/Hammerspace"
+vm_datastore = "datastore1"
+
+# Network Configuration
+data_network_name = "Prod-Data-Network"
+mgmt_network_name = "Prod-Mgmt-Network" 
+ha_network_name   = "Prod-HA-Network"
+
+
+# Hammerspace Configuration
+hammerspace_ova_path = "/path/to/hammerspace.ova"
+dns_servers         = "8.8.8.8,8.8.4.4"
+default_gateway     = "192.168.1.1"
+
+# Anvil Configuration
+anvil_ip       = "192.168.1.10/24"
+anvil_hostname = "anvil1"
+
+# DSX Configuration
+dsx_ips = [
+  "192.168.1.11/24",
+  "192.168.1.12/24",
+  "192.168.1.13/24",
+  "192.168.1.14/24"
+]
+dsx_data_disk_gb = 2048
+
+# uncomment for custom values
+#custom_anvil_instance_count = ""
+#custom_anvil_cpu = ""
+#custom_anvil_memory_mb = ""
+#custom_anvil_boot_disk_gb = ""
+#custom_anvil_metadata_disk_gb = ""
+#custom_dsx_instance_count = ""
+#custom_dsx_cpu = ""
+#custom_dsx_memory_mb = ""
+#custom_dsx_boot_disk_gb = ""
