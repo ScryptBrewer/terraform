@@ -104,8 +104,8 @@ tofu apply
 
 ## Hammerspace and Security Parameters
 
-| Parameter | | Description | Default Notes|
-|-----------|-|-------------|--------------| 
+| Parameter | Description | Default | Notes|
+|-----------|-------------|---------|------| 
 | deployment_name | Deployment name prefix |  "hammerspace-5-1-24-318" |  Used for resource naming |
 | admin_user_password | Admin user password | "Password"  Change this! |
 | kms_key_id  | KMS key for disk encryption | "" |
@@ -162,15 +162,15 @@ tofu apply
 
 
 4.  **Verify Configuration (Optional but Recommended):**
- |  You can verify that your AWS CLI is configured correctly by running a simple command, for example, to list your S3 buckets (if you have any):
- |  ```bash
- |  aws s3 ls
- |  ```
- |  Or, to get your caller identity:
- |  ```bash
- |  aws sts get-caller-identity
- |  ```
- |  If these commands execute successfully and return the expected information, your default profile is configured.
+You can verify that your AWS CLI is configured correctly by running a simple command, for example, to list your S3 buckets (if you have any):
+```bash
+aws s3 ls
+```
+Or, to get your caller identity:
+```bash
+aws sts get-caller-identity
+```
+If these commands execute successfully and return the expected information, your default profile is configured.
 
 **Security Note:**
 - Your AWS access keys grant significant access to your AWS account. Keep your Secret Access Key confidential.
@@ -242,8 +242,8 @@ This project includes the following OpenTofu configuration files:
 2.  **Configure AWS Credentials & IAM Permissions**: Ensure your AWS default profile is configured and the IAM user has the `HammerspaceCloudFormationDeployerPolicy` (or equivalent) attached, as described above.
 
 3.  **Customize `terraform.tfvars`**:
- |  There are 4 deployment-sizes availble [starter, medium, large, or custom]
- |  Open `terraform.tfvars` and update the placeholder values (e.g., `vpc_id`, `subnet_1_id`, `az1`, `sec_ip_cidr`) with your specific environment details. Review all other variables to ensure they match your desired Hammerspace configuration.
+There are 4 deployment-sizes availble [starter, medium, large, or custom]
+Open `terraform.tfvars` and update the placeholder values (e.g., `vpc_id`, `subnet_1_id`, `az1`, `sec_ip_cidr`) with your specific environment details. Review all other variables to ensure they match your desired Hammerspace configuration.
 
 4.  **Initialize OpenTofu**:
 Navigate to the directory containing the OpenTofu files and run:
