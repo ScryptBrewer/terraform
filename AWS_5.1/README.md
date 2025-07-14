@@ -173,9 +173,9 @@ tofu apply
  |  If these commands execute successfully and return the expected information, your default profile is configured.
 
 **Security Note:**
-* | Your AWS access keys grant significant access to your AWS account. Keep your Secret Access Key confidential.
-* | Do not commit your `~/.aws/credentials` file to any version control system.
-* | Consider using IAM roles for EC2 instances or other AWS services if running OpenTofu from within AWS, to avoid storing long-lived credentials.
+- Your AWS access keys grant significant access to your AWS account. Keep your Secret Access Key confidential.
+- Do not commit your `~/.aws/credentials` file to any version control system.
+- Consider using IAM roles for EC2 instances or other AWS services if running OpenTofu from within AWS, to avoid storing long-lived credentials.
 
 ## IAM Permissions for Deployment
 
@@ -185,55 +185,55 @@ A recommended IAM policy is provided in the file:
 **`Hammerspace_CloudFormation_Deployer_IAM_Policy.json`**
 
 This policy grants the minimum necessary permissions for:
-* | CloudFormation stack operations (create, delete, update, describe).
-* | Managing EC2 resources (instances, security groups, volumes).
-* | Managing IAM resources created by the template (roles, instance profiles, groups).
-* | Passing IAM roles to EC2 instances.
-* | Fetching the CloudFormation template from S3.
-* | Creating, deleting, and managing S3 buckets as required by the Hammerspace product.
+- CloudFormation stack operations (create, delete, update, describe).
+- Managing EC2 resources (instances, security groups, volumes).
+- Managing IAM resources created by the template (roles, instance profiles, groups).
+- Passing IAM roles to EC2 instances.
+- Fetching the CloudFormation template from S3.
+- Creating, deleting, and managing S3 buckets as required by the Hammerspace product.
 
 ### Applying the IAM Policy to a User
 
 You can apply this policy to an IAM user in the AWS Management Console:
 
 1.  **Navigate to the IAM Console:**
- |  * | Log in to your AWS Management Console.
- |  * | Search for and navigate to the "IAM" service.
+- Log in to your AWS Management Console.
+- Search for and navigate to the "IAM" service.
 
 2.  **Create or Select the User:**
- |  * | If you are applying the policy to an existing user (the one whose credentials you configured with `aws configure`), select "Users" from the left navigation pane and find the user in the list. Click on the username.
- |  * | If you need to create a new user for this purpose, click "Add users", follow the prompts, and ensure you generate access keys for this new user to configure with the AWS CLI.
+- If you are applying the policy to an existing user (the one whose credentials you configured with `aws configure`), select "Users" from the left navigation pane and find the user in the list. Click on the username.
+- If you need to create a new user for this purpose, click "Add users", follow the prompts, and ensure you generate access keys for this new user to configure with the AWS CLI.
 
 3.  **Create and Attach the Policy:**
- |  * | In the user's summary page, go to the "Permissions" tab.
- |  * | Under "Permissions policies", click "Add permissions" and select "Attach policies directly".
- |  * | Click the "Create policy" button. This will open a new tab/window.
- |  * | In the policy editor, select the "JSON" tab.
- |  * | Open the `Hammerspace_CloudFormation_Deployer_IAM_Policy.json` file from this repository, copy its entire content.
- |  * | Paste the JSON content into the policy editor in the AWS console, replacing any existing content.
- |  * | Click "Next: Tags" (you can add tags if desired, or skip).
- |  * | Click "Next: Review".
- |  * | Give the policy a **Name** (e.g., `HammerspaceCloudFormationDeployerPolicy`) and an optional **Description**.
- |  * | Review the permissions and click "Create policy".
- |  * | Close the policy creation tab/window and return to the user's permissions tab where you clicked "Create policy".
- |  * | You may need to refresh the list of policies. Search for the policy you just created by its name (e.g., `HammerspaceCloudFormationDeployerPolicy`).
- |  * | Select the checkbox next to your newly created policy.
- |  * | Click "Next" and then "Add permissions".
+- In the user's summary page, go to the "Permissions" tab.
+- Under "Permissions policies", click "Add permissions" and select "Attach policies directly".
+- Click the "Create policy" button. This will open a new tab/window.
+- In the policy editor, select the "JSON" tab.
+- Open the `Hammerspace_CloudFormation_Deployer_IAM_Policy.json` file from this repository, copy its entire content.
+- Paste the JSON content into the policy editor in the AWS console, replacing any existing content.
+- Click "Next: Tags" (you can add tags if desired, or skip).
+- Click "Next: Review".
+- Give the policy a **Name** (e.g., `HammerspaceCloudFormationDeployerPolicy`) and an optional **Description**.
+- Review the permissions and click "Create policy".
+- Close the policy creation tab/window and return to the user's permissions tab where you clicked "Create policy".
+- You may need to refresh the list of policies. Search for the policy you just created by its name (e.g., `HammerspaceCloudFormationDeployerPolicy`).
+- Select the checkbox next to your newly created policy.
+- Click "Next" and then "Add permissions".
 
 The IAM user should now have the necessary permissions to deploy the Hammerspace CloudFormation stack using OpenTofu.
 
 **IAM Best Practices:**
-* | **Least Privilege:** Always grant only the permissions necessary. Regularly review this policy to ensure it aligns with the actual requirements of the CloudFormation template.
-* | **Scope Down `iam:PassRole`:** The `iam:PassRole` permission in the provided policy is broad (`"Resource": ["arn:aws:iam::*:role/*"]`). For enhanced security, restrict this to the specific role ARNs that will be passed to EC2 instances by the CloudFormation template.
-* | **Regular Audits:** Periodically review IAM user permissions and policies.
+- **Least Privilege:** Always grant only the permissions necessary. Regularly review this policy to ensure it aligns with the actual requirements of the CloudFormation template.
+- **Scope Down `iam:PassRole`:** The `iam:PassRole` permission in the provided policy is broad (`"Resource": ["arn:aws:iam::*:role/*"]`). For enhanced security, restrict this to the specific role ARNs that will be passed to EC2 instances by the CloudFormation template.
+- **Regular Audits:** Periodically review IAM user permissions and policies.
 
 ## OpenTofu Configuration Files
 
 This project includes the following OpenTofu configuration files:
 
-* | `main.tf`: Defines the AWS provider and the `aws_cloudformation_stack` resource that deploys the Hammerspace template. It also includes outputs from the CloudFormation stack.
-* | `variables.tf`: Declares all input variables used by the OpenTofu configuration, which are passed as parameters to the CloudFormation template.
-* | `terraform.tfvars`: Sets the values for the variables defined in `variables.tf`. **You will need to customize this file with your specific VPC ID, Subnet ID, AZ, and other required parameters.** (The `.tfvars` extension is standard and used by both OpenTofu and Terraform).
+- `main.tf`: Defines the AWS provider and the `aws_cloudformation_stack` resource that deploys the Hammerspace template. It also includes outputs from the CloudFormation stack.
+- `variables.tf`: Declares all input variables used by the OpenTofu configuration, which are passed as parameters to the CloudFormation template.
+- `terraform.tfvars`: Sets the values for the variables defined in `variables.tf`. **You will need to customize this file with your specific VPC ID, Subnet ID, AZ, and other required parameters.** (The `.tfvars` extension is standard and used by both OpenTofu and Terraform).
 
 ## Usage
 
@@ -246,29 +246,29 @@ This project includes the following OpenTofu configuration files:
  |  Open `terraform.tfvars` and update the placeholder values (e.g., `vpc_id`, `subnet_1_id`, `az1`, `sec_ip_cidr`) with your specific environment details. Review all other variables to ensure they match your desired Hammerspace configuration.
 
 4.  **Initialize OpenTofu**:
- |  Navigate to the directory containing the OpenTofu files and run:
- |  ```bash
- |  tofu init
- |  ```
+Navigate to the directory containing the OpenTofu files and run:
+```bash
+tofu init
+```
 
 5.  **Plan the Deployment**:
- |  Review the execution plan to see what resources OpenTofu will manage (in this case, the CloudFormation stack):
- |  ```bash
- |  tofu plan
- |  ```
+Review the execution plan to see what resources OpenTofu will manage (in this case, the CloudFormation stack):
+```bash
+tofu plan
+```
 
 6.  **Apply the Configuration**:
- |  If the plan looks correct, apply the configuration to deploy the Hammerspace stack:
- |  ```bash
- |  tofu apply
- |  ```
- |  OpenTofu will prompt for confirmation before proceeding. Type `yes` to approve.
+If the plan looks correct, apply the configuration to deploy the Hammerspace stack:
+```bash
+tofu apply
+```
+OpenTofu will prompt for confirmation before proceeding. Type `yes` to approve.
 
 7.  **Access Outputs**:
- |  Once the deployment is complete, OpenTofu will display any defined outputs, such as the `ManagementIp` and `ManagementUrl`. You can also view them later with:
- |  ```bash
- |  tofu output
- |  ```
+Once the deployment is complete, OpenTofu will display any defined outputs, such as the `ManagementIp` and `ManagementUrl`. You can also view them later with:
+```bash
+tofu output
+```
 
 ## Destroying Resources
 
@@ -276,10 +276,10 @@ To remove the resources created by this OpenTofu configuration (i.e., delete the
 
 1.  Navigate to the directory containing the OpenTofu files.
 2.  Run the destroy command:
- |  ```bash
- |  tofu destroy
- |  ```
- |  OpenTofu will prompt for confirmation. Type `yes` to approve.
+```bash
+tofu destroy
+```
+OpenTofu will prompt for confirmation. Type `yes` to approve.
 
 **Caution**: This will delete the CloudFormation stack and all resources it manages. Ensure you want to remove the entire Hammerspace deployment.
 
