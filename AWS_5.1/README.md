@@ -95,7 +95,7 @@ tofu apply
 ## Required Parameters (Must be configured in .tfvars files)
 
 | Parameter | Description | Example |
-|***********|*************|*********|
+|------------|---------------------------|-------------|
 | aws_region | AWS Region for deployment | "us-east-1" |
 | availability_zone | AWS Availability Zone | "us-east-1a" |
 | admin_user_password | Admin password for Hammerspace | "SecurePassword123!" |
@@ -105,7 +105,7 @@ tofu apply
 ## Hammerspace and Security Parameters
 
 | Parameter | | Description | Default Notes|
-|***********|***************|**************| 
+|-----------|-|-------------|--------------| 
 | deployment_name | Deployment name prefix |  "hammerspace-5-1-24-318" |  Used for resource naming |
 | admin_user_password | Admin user password | "Password"  Change this! |
 | kms_key_id  | KMS key for disk encryption | "" |
@@ -113,7 +113,7 @@ tofu apply
 ## Anvil (Metadata Server) Parameters
 
 | Parameter | Description | Default | Range/Options|
-|***********|*************|*********|**************|
+|-----------|-------------|---------|--------------|
 | anvil_instance_count | Number of Anvil instances  |  2  |  1 (Standalone) or 2 (HA)| 
 | anvil_instance_type | Anvil instance type "m5.xlarge" | Any valid AWS instance type| 
 | anvil_data_disk_type | Anvil data disk type |  "gp3"  |  gp2, gp3, io1, io2| 
@@ -122,7 +122,7 @@ tofu apply
 ## DSX (Storage Server) Parameters
 
 | Parameter | Description | Default | Range/Options |
-|***********|*************|*********|***************|
+|-----------|-------------|---------|---------------|
 | dsx_instance_count | Number of DSX instances 5 | 0-100 |
 | dsx_instance_type | DSX instance type | "m5.2xlarge" | | Any valid AWS instance type |
 | dsx_root_disk_size | DSX root disk size (GB) 100 100+ |
@@ -134,7 +134,7 @@ tofu apply
 ## Network Parameters
 
 | Parameter | Description | Default |
-|***********|*************|*********|
+|-----------|-------------|---------|
 | vpc_id | VPC ID | "ChangeToYourVPC" |
 | subnet_id | Subnet ID | "ChangeToYourSubnet" |
 | security_group_ids | List of security group IDs | [] |
@@ -142,14 +142,14 @@ tofu apply
 ## Existing Solution Parameters
 
 | Parameter | Description | Default | Notes |
-|***********|*************|*********|**************|
+|-----------|-------------|---------|--------------|
 | internal_ip Existing Anvil cluster IP | "" | Required when create_new_solution = false |
 | create_new_solution Create new Hammerspace solution true | Set to false to add DSX to existing solution |
 
 ## System Parameters (Do not modify unless directed)
 
 | Parameter | Description | Default |
-|***********|*************|*********|
+|-----------|-------------|---------|
 | ami_id | Hammerspace AMI ID | "ami-hammerspace-5-1-24-318" |
 | root_disk_type | Root disk type | "gp3" |
 | root_disk_size | Root disk size (GB) 100 |
@@ -318,4 +318,4 @@ To remove the resources created by this OpenTofu configuration (i.e., delete the
 | 20 | 1024GB | Large | 200.00 | $485 | $11,640 | $349,200 | $420 | $10,080 | $302,400 | $1,265 | $30,360 | $910,800 | $275 | $6,600 | $198,000 |
 
 ## Disclaimer: Preliminary Cost Estimates
-*These figures are high-level estimates for planning purposes only and are not official quotes.Actual costs will vary based on your final configuration, including AWS Region, provisioned storage performance (IOPS/throughput), data transfer fees, and the purchasing model used (e.g., On-Demand vs. Savings Plans). These estimates do not include all potential service charges.For an accurate quote, please use the official AWS Pricing Calculator.
+* These figures are high-level estimates for planning purposes only and are not official quotes.Actual costs will vary based on your final configuration, including AWS Region, provisioned storage performance (IOPS/throughput), data transfer fees, and the purchasing model used (e.g., On-Demand vs. Savings Plans). These estimates do not include all potential service charges.For an accurate quote, please use the official AWS Pricing Calculator.
